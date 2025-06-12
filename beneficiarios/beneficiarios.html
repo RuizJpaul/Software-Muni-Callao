@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Gestión Comedores - Municipalidad Callao</title>
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    // Extender paleta de colores
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            callaoBlue: '#0057B7',
+            callaoYellow: '#FFC20E',
+            callaoPurple: '#6B21A8'
+          }
+        }
+      }
+    }
+  </script>
+</head>
+<body class="flex h-screen bg-gradient-to-r from-blue-50 to-purple-50">
+  <!-- Sidebar -->
+  <aside id="sidebar" class="bg-gradient-to-b from-callaoPurple to-callaoBlue text-white w-60 flex-shrink-0 transform -translate-x-full lg:translate-x-0 lg:relative fixed top-0 left-0 h-full z-30 transition-transform shadow-lg">
+    <div class="flex items-center justify-between h-16 px-4 border-b border-purple-700">
+      <span class="text-3xl font-extrabold bg-clip-text text-transparent bg-gradient-to-r from-callaoYellow to-red-500">🌊 Callao</span>
+      <button id="btnSidebarClose" class="lg:hidden focus:outline-none text-2xl">&times;</button>
+    </div>
+    <nav class="p-4 space-y-1">
+      <a href="#" class="flex items-center px-3 py-2 rounded-lg hover:bg-purple-700 transition">🏠 <span class="ml-2">Dashboard</span></a>
+      <a href="#" class="flex items-center px-3 py-2 rounded-lg hover:bg-purple-700 transition">🏛️ <span class="ml-2">Comedores</span></a>
+      <a href="#" class="flex items-center px-3 py-2 rounded-lg hover:bg-purple-700 transition">👥 <span class="ml-2">Beneficiarios</span></a>
+      <a href="#" class="flex items-center px-3 py-2 rounded-lg hover:bg-purple-700 transition">🍽️ <span class="ml-2">Entregas</span></a>
+      <a href="#" class="flex items-center px-3 py-2 rounded-lg hover:bg-purple-700 transition">🔒 <span class="ml-2">Usuarios</span></a>
+      <a href="#" class="flex items-center px-3 py-2 rounded-lg hover:bg-purple-700 transition">📊 <span class="ml-2">Panel</span></a>
+      <a href="#" class="flex items-center px-3 py-2 rounded-lg hover:bg-purple-700 transition">🕵️ <span class="ml-2">Auditoría</span></a>
+    </nav>
+  </aside>
+
+  <!-- Main content wrapper -->
+  <div class="flex-1 flex flex-col">
+    <!-- Header -->
+    <header class="h-16 bg-gradient-to-r from-pink-500 to-red-500 flex items-center px-6 shadow-md">
+      <button id="btnSidebarOpen" class="lg:hidden mr-4 focus:outline-none text-2xl text-white">&#9776;</button>
+      <h1 class="text-2xl font-bold text-white">Dashboard 🎉</h1>
+    </header>
+
+    <!-- Main area -->
+    <main class="flex-1 overflow-y-auto p-6">
+      <!-- Grid de tarjetas -->
+    <!-- Main area -->
+<main class="flex-1 overflow-y-auto p-6">
+  <!-- Grid de tarjetas -->
+  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-4 gap-6">
+    <!-- Registro con DNI -->
+    <div class="bg-white rounded-xl shadow-md p-5 border-l-4 border-callaoBlue">
+      <h2 class="text-lg font-bold text-callaoBlue mb-2">🆔 Registro con DNI</h2>
+      <p class="text-sm text-gray-600">Permite registrar nuevos beneficiarios usando su número de DNI, validando su autenticidad.</p>
+    </div>
+
+    <!-- Consulta y actualización de datos -->
+    <div class="bg-white rounded-xl shadow-md p-5 border-l-4 border-callaoPurple">
+      <h2 class="text-lg font-bold text-callaoPurple mb-2">📝 Consulta y Actualización</h2>
+      <p class="text-sm text-gray-600">Consulta los datos personales registrados y actualízalos de forma segura.</p>
+    </div>
+
+    <!-- Verificación de duplicados -->
+    <div class="bg-white rounded-xl shadow-md p-5 border-l-4 border-callaoYellow">
+      <h2 class="text-lg font-bold text-callaoYellow mb-2">🔍 Verificación de Duplicados</h2>
+      <p class="text-sm text-gray-600">Identifica registros repetidos en el padrón para evitar beneficiarios duplicados.</p>
+    </div>
+
+    <!-- Asignación a comedor -->
+    <div class="bg-white rounded-xl shadow-md p-5 border-l-4 border-red-500">
+      <h2 class="text-lg font-bold text-red-500 mb-2">🍽️ Asignación a Comedor</h2>
+      <p class="text-sm text-gray-600">Asigna automáticamente al beneficiario a un comedor según jurisdicción o preferencia registrada.</p>
+    </div>
+  </div>
+</main>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="h-12 bg-gradient-to-r from-callaoBlue to-indigo-700 flex items-center justify-center text-white">
+      <span class="text-sm">v1.0 • Municipalidad Provincial del Callao</span>
+    </footer>
+  </div>
+
+  <!-- JavaScript: Toggle Sidebar -->
+  <script>
+    const sidebar = document.getElementById('sidebar');
+    const btnOpen = document.getElementById('btnSidebarOpen');
+    const btnClose = document.getElementById('btnSidebarClose');
+    btnOpen.addEventListener('click', () => sidebar.classList.remove('-translate-x-full'));
+    btnClose.addEventListener('click', () => sidebar.classList.add('-translate-x-full'));
+  </script>
+</body>
+</html>
