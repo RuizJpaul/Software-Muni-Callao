@@ -50,28 +50,36 @@
     <!-- Main area -->
     <main class="flex-1 overflow-y-auto p-6">
       <!-- Grid de tarjetas -->
-      <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-        <!-- Tarjeta Contexto -->
-        <div class="bg-yellow-100 p-6 rounded-lg shadow-lg border-l-4 border-callaoYellow hover:scale-105 transform transition">
-          <h2 class="text-xl font-bold mb-2 text-callaoBlue">🔍 Contexto</h2>
-          <p>La Municipalidad Provincial del Callao, a través de su Gerencia de Comedores, promueve el bienestar social con desayunos y almuerzos gratuitos.</p>
-        </div>
-        <!-- Tarjeta Problema -->
-        <div class="bg-red-100 p-6 rounded-lg shadow-lg border-l-4 border-red-400 hover:scale-105 transform transition">
-          <h2 class="text-xl font-bold mb-2 text-red-600">⚠️ Problema</h2>
-          <p>Gestión documental en papel, búsqueda manual sin base de datos integral, dificultad en la trazabilidad.</p>
-        </div>
-        <!-- Tarjeta Solución -->
-        <div class="bg-green-100 p-6 rounded-lg shadow-lg border-l-4 border-green-400 hover:scale-105 transform transition">
-          <h2 class="text-xl font-bold mb-2 text-green-700">💡 Solución</h2>
-          <p>Sistema integral web y móvil con registro digital de beneficiarios, control de entregas y panel de estadísticas.</p>
-        </div>
-        <!-- Tarjeta Recursos -->
-        <div class="bg-blue-100 p-6 rounded-lg shadow-lg border-l-4 border-blue-400 hover:scale-105 transform transition">
-          <h2 class="text-xl font-bold mb-2 text-callaoBlue">📊 Recursos de Datos</h2>
-          <p>Tablas de usuarios, comedores, entregas y beneficiarios (anonimizados) disponibles para consulta.</p>
-        </div>
-      </div>
+    <!-- Main area -->
+<main class="flex-1 overflow-y-auto p-6">
+  <!-- Grid de tarjetas -->
+  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-4 gap-6">
+    <!-- Registro con DNI -->
+    <div class="bg-white rounded-xl shadow-md p-5 border-l-4 border-callaoBlue">
+      <h2 class="text-lg font-bold text-callaoBlue mb-2">🆔 Registro con DNI</h2>
+      <p class="text-sm text-gray-600">Permite registrar nuevos beneficiarios usando su número de DNI, validando su autenticidad.</p>
+    </div>
+
+    <!-- Consulta y actualización de datos -->
+    <div class="bg-white rounded-xl shadow-md p-5 border-l-4 border-callaoPurple">
+      <h2 class="text-lg font-bold text-callaoPurple mb-2">📝 Consulta y Actualización</h2>
+      <p class="text-sm text-gray-600">Consulta los datos personales registrados y actualízalos de forma segura.</p>
+    </div>
+
+    <!-- Verificación de duplicados -->
+    <div class="bg-white rounded-xl shadow-md p-5 border-l-4 border-callaoYellow">
+      <h2 class="text-lg font-bold text-callaoYellow mb-2">🔍 Verificación de Duplicados</h2>
+      <p class="text-sm text-gray-600">Identifica registros repetidos en el padrón para evitar beneficiarios duplicados.</p>
+    </div>
+
+    <!-- Asignación a comedor -->
+    <div class="bg-white rounded-xl shadow-md p-5 border-l-4 border-red-500">
+      <h2 class="text-lg font-bold text-red-500 mb-2">🍽️ Asignación a Comedor</h2>
+      <p class="text-sm text-gray-600">Asigna automáticamente al beneficiario a un comedor según jurisdicción o preferencia registrada.</p>
+    </div>
+  </div>
+</main>
+
     </main>
 
     <!-- Footer -->
