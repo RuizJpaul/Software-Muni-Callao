@@ -53,31 +53,124 @@
     <!-- Main area -->
 <main class="flex-1 overflow-y-auto p-6">
   <!-- Grid de tarjetas -->
-  <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-2 xl:grid-cols-4 gap-6">
-    <!-- Registro con DNI -->
-    <div class="bg-white rounded-xl shadow-md p-5 border-l-4 border-callaoBlue">
-      <h2 class="text-lg font-bold text-callaoBlue mb-2">🆔 Registro con DNI</h2>
-      <p class="text-sm text-gray-600">Permite registrar nuevos beneficiarios usando su número de DNI, validando su autenticidad.</p>
+<!-- Formulario de gestión de beneficiarios -->
+<section class="max-w-4xl mx-auto bg-white rounded-xl shadow-lg p-6 mt-6 border border-gray-200">
+  <h2 class="text-2xl font-bold text-callaoBlue mb-4">🧾 Registro y Gestión de Beneficiarios</h2>
+  <form class="space-y-4">
+    <!-- DNI -->
+    <div>
+      <label for="dni" class="block text-sm font-medium text-gray-700">Número de DNI</label>
+      <input type="text" id="dni" name="dni" maxlength="8" pattern="\d{8}" required
+             class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2 focus:ring-callaoBlue focus:border-callaoBlue" placeholder="Ingrese el DNI de 8 dígitos">
     </div>
 
-    <!-- Consulta y actualización de datos -->
-    <div class="bg-white rounded-xl shadow-md p-5 border-l-4 border-callaoPurple">
-      <h2 class="text-lg font-bold text-callaoPurple mb-2">📝 Consulta y Actualización</h2>
-      <p class="text-sm text-gray-600">Consulta los datos personales registrados y actualízalos de forma segura.</p>
+    <!-- Nombre completo -->
+    <div>
+      <label for="nombre" class="block text-sm font-medium text-gray-700">Nombre completo</label>
+      <input type="text" id="nombre" name="nombre" required
+             class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2 focus:ring-callaoBlue focus:border-callaoBlue" placeholder="Nombres y apellidos">
     </div>
 
-    <!-- Verificación de duplicados -->
-    <div class="bg-white rounded-xl shadow-md p-5 border-l-4 border-callaoYellow">
-      <h2 class="text-lg font-bold text-callaoYellow mb-2">🔍 Verificación de Duplicados</h2>
-      <p class="text-sm text-gray-600">Identifica registros repetidos en el padrón para evitar beneficiarios duplicados.</p>
+    <!-- Dirección -->
+    <div>
+      <label for="direccion" class="block text-sm font-medium text-gray-700">Dirección</label>
+      <input type="text" id="direccion" name="direccion"
+             class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2 focus:ring-callaoBlue focus:border-callaoBlue" placeholder="Ej: Av. La Marina 123, Callao">
     </div>
 
-    <!-- Asignación a comedor -->
-    <div class="bg-white rounded-xl shadow-md p-5 border-l-4 border-red-500">
-      <h2 class="text-lg font-bold text-red-500 mb-2">🍽️ Asignación a Comedor</h2>
-      <p class="text-sm text-gray-600">Asigna automáticamente al beneficiario a un comedor según jurisdicción o preferencia registrada.</p>
+    <!-- Jurisdicción -->
+    <div>
+      <label for="jurisdiccion" class="block text-sm font-medium text-gray-700">Jurisdicción</label>
+      <select id="jurisdiccion" name="jurisdiccion"
+              class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2 focus:ring-callaoBlue focus:border-callaoBlue">
+        <option value="">Seleccione una jurisdicción</option>
+        <option value="ventanilla">Ventanilla</option>
+        <option value="bellavista">Bellavista</option>
+        <option value="la-perla">La Perla</option>
+        <option value="carmen-de-la-legua">Carmen de la Legua</option>
+        <option value="callao">Callao</option>
+      </select>
     </div>
-  </div>
+
+    <!-- Preferencia de comedor -->
+    <div>
+      <label for="comedor" class="block text-sm font-medium text-gray-700">Preferencia de Comedor</label>
+      <input type="text" id="comedor" name="comedor"
+             class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2 focus:ring-callaoBlue focus:border-callaoBlue" placeholder="Nombre del comedor si lo desea">
+    </div>
+
+    <!-- Botones de acción -->
+    <div class="flex flex-wrap justify-end gap-4 mt-6">
+      <button type="submit"
+              class="bg-callaoBlue hover:bg-blue-800 text-white font-semibold py-2 px-4 rounded shadow-md transition">
+        Guardar
+      </button>
+      <button type="reset"
+              class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-semibold py-2 px-4 rounded shadow-md transition">
+        Limpiar
+      </button>
+    </div>
+  </form>
+</section>
+<!-- Formulario para modificar datos de un beneficiario existente -->
+<section class="max-w-4xl mx-auto bg-white rounded-xl shadow-lg p-6 mt-10 border border-yellow-300">
+  <h2 class="text-2xl font-bold text-yellow-600 mb-4">✏️ Modificar Datos de Beneficiario</h2>
+  <form class="space-y-4">
+    <!-- Buscar por DNI -->
+    <div>
+      <label for="buscar-dni" class="block text-sm font-medium text-gray-700">DNI del Beneficiario</label>
+      <input type="text" id="buscar-dni" name="buscar-dni" maxlength="8" pattern="\d{8}" required
+             class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2 focus:ring-yellow-500 focus:border-yellow-500"
+             placeholder="Ingrese el DNI a buscar">
+    </div>
+
+    <!-- Campos para modificar (rellenables tras búsqueda) -->
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+      <div>
+        <label for="mod-nombre" class="block text-sm font-medium text-gray-700">Nombre completo</label>
+        <input type="text" id="mod-nombre" name="mod-nombre"
+               class="mt-1 block w-full border border-gray-300 rounded-md p-2 focus:ring-yellow-500 focus:border-yellow-500"
+               placeholder="Nombre actualizado">
+      </div>
+
+      <div>
+        <label for="mod-direccion" class="block text-sm font-medium text-gray-700">Dirección</label>
+        <input type="text" id="mod-direccion" name="mod-direccion"
+               class="mt-1 block w-full border border-gray-300 rounded-md p-2 focus:ring-yellow-500 focus:border-yellow-500"
+               placeholder="Dirección actualizada">
+      </div>
+
+      <div>
+        <label for="mod-jurisdiccion" class="block text-sm font-medium text-gray-700">Jurisdicción</label>
+        <select id="mod-jurisdiccion" name="mod-jurisdiccion"
+                class="mt-1 block w-full border border-gray-300 rounded-md p-2 focus:ring-yellow-500 focus:border-yellow-500">
+          <option value="">Seleccione una jurisdicción</option>
+          <option value="ventanilla">Ventanilla</option>
+          <option value="bellavista">Bellavista</option>
+          <option value="la-perla">La Perla</option>
+          <option value="carmen-de-la-legua">Carmen de la Legua</option>
+          <option value="callao">Callao</option>
+        </select>
+      </div>
+
+      <div>
+        <label for="mod-comedor" class="block text-sm font-medium text-gray-700">Preferencia de Comedor</label>
+        <input type="text" id="mod-comedor" name="mod-comedor"
+               class="mt-1 block w-full border border-gray-300 rounded-md p-2 focus:ring-yellow-500 focus:border-yellow-500"
+               placeholder="Nuevo comedor preferido">
+      </div>
+    </div>
+
+    <!-- Botón de actualización -->
+    <div class="flex justify-end mt-6">
+      <button type="submit"
+              class="bg-yellow-500 hover:bg-yellow-600 text-white font-semibold py-2 px-4 rounded shadow-md transition">
+        Actualizar Datos
+      </button>
+    </div>
+  </form>
+</section>
+
 </main>
 
     </main>
