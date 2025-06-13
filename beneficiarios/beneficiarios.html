@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Gestión Comedores - Municipalidad Callao</title>
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    // Extender paleta de colores
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            callaoBlue: '#0057B7',
+            callaoYellow: '#FFC20E',
+            callaoPurple: '#6B21A8'
+          }
+        }
+      }
+    }
+  </script>
+</head>
+<body class="flex h-screen bg-gradient-to-r from-blue-50 to-purple-50">
+  <!-- Sidebar -->
+  <aside id="sidebar" class="bg-gradient-to-b from-callaoPurple to-callaoBlue text-white w-60 flex-shrink-0 transform -translate-x-full lg:translate-x-0 lg:relative fixed top-0 left-0 h-full z-30 transition-transform shadow-lg">
+    <div class="flex items-center justify-between h-16 px-4 border-b border-purple-700">
+      <span class="text-3xl font-extrabold bg-clip-text text-transparent bg-gradient-to-r from-callaoYellow to-red-500">🌊 Callao</span>
+      <button id="btnSidebarClose" class="lg:hidden focus:outline-none text-2xl">&times;</button>
+    </div>
+    <nav class="p-4 space-y-1">
+    <a href="#" class="flex items-center px-3 py-2 rounded-lg hover:bg-purple-700 transition">🏠 <span class="ml-2">Dashboard</span></a>
+      <a href="./Comedores/comedores.html" class="flex items-center px-3 py-2 rounded-lg hover:bg-purple-700 transition">🏛️ <span class="ml-2">Comedores</span></a>
+      <a href="./beneficiarios/beneficiarios.html" class="flex items-center px-3 py-2 rounded-lg hover:bg-purple-700 transition">👥 <span class="ml-2">Beneficiarios</span></a>
+      <a href="./entregas/entregas.html" class="flex items-center px-3 py-2 rounded-lg hover:bg-purple-700 transition">🍽️ <span class="ml-2">Entregas</span></a>
+      <a href="#" class="flex items-center px-3 py-2 rounded-lg hover:bg-purple-700 transition">🔒 <span class="ml-2">Usuarios</span></a>
+      <a href="#" class="flex items-center px-3 py-2 rounded-lg hover:bg-purple-700 transition">📊 <span class="ml-2">Panel</span></a>
+      <a href="#" class="flex items-center px-3 py-2 rounded-lg hover:bg-purple-700 transition">🕵️ <span class="ml-2">Auditoría</span></a>
+    </nav>
+  </aside>
+
+  <!-- Main content wrapper -->
+  <div class="flex-1 flex flex-col">
+    <!-- Header -->
+    <header class="h-16 bg-gradient-to-r from-pink-500 to-red-500 flex items-center px-6 shadow-md">
+      <button id="btnSidebarOpen" class="lg:hidden mr-4 focus:outline-none text-2xl text-white">&#9776;</button>
+      <h1 class="text-2xl font-bold text-white">Dashboard 🎉</h1>
+    </header>
+
+    <!-- Main area -->
+    <main class="flex-1 overflow-y-auto p-6">
+      <!-- Grid de tarjetas -->
+    <!-- Main area -->
+<main class="flex-1 overflow-y-auto p-6">
+  <!-- Grid de tarjetas -->
+<!-- Formulario de gestión de beneficiarios -->
+<section class="max-w-4xl mx-auto bg-white rounded-xl shadow-lg p-6 mt-6 border border-gray-200">
+  <h2 class="text-2xl font-bold text-callaoBlue mb-4">🧾 Registro y Gestión de Beneficiarios</h2>
+  <form class="space-y-4">
+    <!-- DNI -->
+    <div>
+      <label for="dni" class="block text-sm font-medium text-gray-700">Número de DNI</label>
+      <input type="text" id="dni" name="dni" maxlength="8" pattern="\d{8}" required
+             class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2 focus:ring-callaoBlue focus:border-callaoBlue" placeholder="Ingrese el DNI de 8 dígitos">
+    </div>
+
+    <!-- Nombre completo -->
+    <div>
+      <label for="nombre" class="block text-sm font-medium text-gray-700">Nombre completo</label>
+      <input type="text" id="nombre" name="nombre" required
+             class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2 focus:ring-callaoBlue focus:border-callaoBlue" placeholder="Nombres y apellidos">
+    </div>
+
+    <!-- Dirección -->
+    <div>
+      <label for="direccion" class="block text-sm font-medium text-gray-700">Dirección</label>
+      <input type="text" id="direccion" name="direccion"
+             class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2 focus:ring-callaoBlue focus:border-callaoBlue" placeholder="Ej: Av. La Marina 123, Callao">
+    </div>
+
+    <!-- Jurisdicción -->
+    <div>
+      <label for="jurisdiccion" class="block text-sm font-medium text-gray-700">Jurisdicción</label>
+      <select id="jurisdiccion" name="jurisdiccion"
+              class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2 focus:ring-callaoBlue focus:border-callaoBlue">
+        <option value="">Seleccione una jurisdicción</option>
+        <option value="ventanilla">Ventanilla</option>
+        <option value="bellavista">Bellavista</option>
+        <option value="la-perla">La Perla</option>
+        <option value="carmen-de-la-legua">Carmen de la Legua</option>
+        <option value="callao">Callao</option>
+      </select>
+    </div>
+
+    <!-- Preferencia de comedor -->
+    <div>
+      <label for="comedor" class="block text-sm font-medium text-gray-700">Preferencia de Comedor</label>
+      <input type="text" id="comedor" name="comedor"
+             class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2 focus:ring-callaoBlue focus:border-callaoBlue" placeholder="Nombre del comedor si lo desea">
+    </div>
+
+    <!-- Botones de acción -->
+    <div class="flex flex-wrap justify-end gap-4 mt-6">
+      <button type="submit"
+              class="bg-callaoBlue hover:bg-blue-800 text-white font-semibold py-2 px-4 rounded shadow-md transition">
+        Guardar
+      </button>
+      <button type="reset"
+              class="bg-gray-300 hover:bg-gray-400 text-gray-800 font-semibold py-2 px-4 rounded shadow-md transition">
+        Limpiar
+      </button>
+    </div>
+  </form>
+</section>
+<!-- Formulario para modificar datos de un beneficiario existente -->
+<section class="max-w-4xl mx-auto bg-white rounded-xl shadow-lg p-6 mt-10 border border-yellow-300">
+  <h2 class="text-2xl font-bold text-yellow-600 mb-4">✏️ Modificar Datos de Beneficiario</h2>
+  <form class="space-y-4">
+    <!-- Buscar por DNI -->
+    <div>
+      <label for="buscar-dni" class="block text-sm font-medium text-gray-700">DNI del Beneficiario</label>
+      <input type="text" id="buscar-dni" name="buscar-dni" maxlength="8" pattern="\d{8}" required
+             class="mt-1 block w-full border border-gray-300 rounded-md shadow-sm p-2 focus:ring-yellow-500 focus:border-yellow-500"
+             placeholder="Ingrese el DNI a buscar">
+    </div>
+
+    <!-- Campos para modificar (rellenables tras búsqueda) -->
+    <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+      <div>
+        <label for="mod-nombre" class="block text-sm font-medium text-gray-700">Nombre completo</label>
+        <input type="text" id="mod-nombre" name="mod-nombre"
+               class="mt-1 block w-full border border-gray-300 rounded-md p-2 focus:ring-yellow-500 focus:border-yellow-500"
+               placeholder="Nombre actualizado">
+      </div>
+
+      <div>
+        <label for="mod-direccion" class="block text-sm font-medium text-gray-700">Dirección</label>
+        <input type="text" id="mod-direccion" name="mod-direccion"
+               class="mt-1 block w-full border border-gray-300 rounded-md p-2 focus:ring-yellow-500 focus:border-yellow-500"
+               placeholder="Dirección actualizada">
+      </div>
+
+      <div>
+        <label for="mod-jurisdiccion" class="block text-sm font-medium text-gray-700">Jurisdicción</label>
+        <select id="mod-jurisdiccion" name="mod-jurisdiccion"
+                class="mt-1 block w-full border border-gray-300 rounded-md p-2 focus:ring-yellow-500 focus:border-yellow-500">
+          <option value="">Seleccione una jurisdicción</option>
+          <option value="ventanilla">Ventanilla</option>
+          <option value="bellavista">Bellavista</option>
+          <option value="la-perla">La Perla</option>
+          <option value="carmen-de-la-legua">Carmen de la Legua</option>
+          <option value="callao">Callao</option>
+        </select>
+      </div>
+
+      <div>
+        <label for="mod-comedor" class="block text-sm font-medium text-gray-700">Preferencia de Comedor</label>
+        <input type="text" id="mod-comedor" name="mod-comedor"
+               class="mt-1 block w-full border border-gray-300 rounded-md p-2 focus:ring-yellow-500 focus:border-yellow-500"
+               placeholder="Nuevo comedor preferido">
+      </div>
+    </div>
+
+    <!-- Botón de actualización -->
+    <div class="flex justify-end mt-6">
+      <button type="submit"
+              class="bg-yellow-500 hover:bg-yellow-600 text-white font-semibold py-2 px-4 rounded shadow-md transition">
+        Actualizar Datos
+      </button>
+    </div>
+  </form>
+</section>
+
+</main>
+
+    </main>
+
+    <!-- Footer -->
+    <footer class="h-12 bg-gradient-to-r from-callaoBlue to-indigo-700 flex items-center justify-center text-white">
+      <span class="text-sm">v1.0 • Municipalidad Provincial del Callao</span>
+    </footer>
+  </div>
+
+  <!-- JavaScript: Toggle Sidebar -->
+  <script>
+    const sidebar = document.getElementById('sidebar');
+    const btnOpen = document.getElementById('btnSidebarOpen');
+    const btnClose = document.getElementById('btnSidebarClose');
+    btnOpen.addEventListener('click', () => sidebar.classList.remove('-translate-x-full'));
+    btnClose.addEventListener('click', () => sidebar.classList.add('-translate-x-full'));
+  </script>
+</body>
+</html>
