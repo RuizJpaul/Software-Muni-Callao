@@ -7,7 +7,7 @@ btnClose.addEventListener('click', () => sidebar.classList.add('-translate-x-ful
 let estado = false;
 //Modal Uno
 const btnAgregarComedor = document.querySelector("#boton-desplegarModalUno");
-btnAgregarComedor.addEventListener("click", function(){
+btnAgregarComedor.addEventListener("click", function () {
     estado = !estado;
     cambiarEstado("#modal-uno");
 });
@@ -22,7 +22,7 @@ btnAgregarComedor.addEventListener("click", function(){
 
 //Cerrar modal uno
 const btnCerrarUno = document.querySelector("#boton-cerrar-uno");
-btnCerrarUno.addEventListener("click", function(){
+btnCerrarUno.addEventListener("click", function () {
     estado = !estado;
     cambiarEstado("#modal-uno");
 });
@@ -36,12 +36,12 @@ btnCerrarUno.addEventListener("click", function(){
 // });
 
 //Controlador modales
-function cambiarEstado(id){
-    if(estado){
+function cambiarEstado(id) {
+    if (estado) {
         document.querySelector(".recuadro-modales").style = "display: flex;"
         document.querySelector(id).style = "display: flex;";
     }
-    else{
+    else {
         document.querySelector(".recuadro-modales").style = "display: none;"
         document.querySelector(id).style = "display: none;";
     }
@@ -49,7 +49,7 @@ function cambiarEstado(id){
 
 //Agregar comedor
 const btnAgregar = document.querySelector("#boton-agregar");
-btnAgregar.addEventListener("click", function(event){
+btnAgregar.addEventListener("click", function (event) {
     event.preventDefault();
     const inputNombre = document.querySelector("#inputNombre");
     const inputCantidad = document.querySelector("#inputCantidad");
@@ -57,32 +57,32 @@ btnAgregar.addEventListener("click", function(event){
     const inputResponsable = document.querySelector("#inputResponsable");
     const inputTelefono = document.querySelector("#inputTelefono");
 
-    if(inputNombre.value!=="" && inputCantidad.value!=="" && inputDireccion.value!=="" && inputResponsable.value!=="" && inputTelefono.value!==""){
-      const newComedor = new Comedor(inputNombre.value.trim(), inputDireccion.value.trim(), inputCantidad.value.trim(), inputResponsable.value.trim(), inputTelefono.value.trim(), true)
-      window.comedorStore.addComedor(newComedor);
-      alert("Datos guardados exitosamente");
-   }
-   else{
-      alert("Ingrese los datos completos");
-   }
+    if (inputNombre.value !== "" && inputCantidad.value !== "" && inputDireccion.value !== "" && inputResponsable.value !== "" && inputTelefono.value !== "") {
+        const newComedor = new Comedor(inputNombre.value.trim(), inputDireccion.value.trim(), inputCantidad.value.trim(), inputResponsable.value.trim(), inputTelefono.value.trim(), true)
+        window.comedorStore.addComedor(newComedor);
+        alert("Datos guardados exitosamente");
+    }
+    else {
+        alert("Ingrese los datos completos");
+    }
 
-   //Limpiamos los inputs
-   inputNombre.value = "";
-   inputCantidad.value = "";
-   inputDireccion.value = "";
-   inputResponsable.value = "";
-   inputTelefono.value = "";
+    //Limpiamos los inputs
+    inputNombre.value = "";
+    inputCantidad.value = "";
+    inputDireccion.value = "";
+    inputResponsable.value = "";
+    inputTelefono.value = "";
 });
 
 //Renderizar contenido
-function renderizarUI(state){
-   // 💚 Renderizar el arreglo dentro de mi contenedor div
-   const recuadroDos = document.querySelector("#recuadro-dos")
-   // Limpiar el contenedor
-   recuadroDos.innerHTML = ""
-   // Vamos a renderizarlo
-   state.forEach((elmt, index) => {
-      recuadroDos.innerHTML += `
+function renderizarUI(state) {
+    // 💚 Renderizar el arreglo dentro de mi contenedor div
+    const recuadroDos = document.querySelector("#recuadro-dos")
+    // Limpiar el contenedor
+    recuadroDos.innerHTML = ""
+    // Vamos a renderizarlo
+    state.forEach((elmt, index) => {
+        recuadroDos.innerHTML += `
         <div class="recuadro-comedor" id="recuadro-comedor${index}">
             <div class="recuadro-imagen-comedor" id="recuadro-imagen-comedor${index}">
                 <img src="" alt="Comedor">
@@ -90,19 +90,26 @@ function renderizarUI(state){
             <p id="nombre-comedor${index}">Nombre: ${elmt.nombre}</p>
             <p id="direccion-comedor${index}">Direccion: </p>
             <button id="boton-desplegarModalDos" onclick="verModalDos(${index}, ${elmt.nombre})">Ver</button>
+            <button onclick="eliminarComedor(${index})">Eliminar</button>
         </div>
       `
-   })
+    })
 }
 
-function verModalDos(index, nombre){
+function verModalDos(index, nombre) {
     estado = !estado;
     cambiarEstado(".modal-dos");
 }
 
-function ocultarModalDos(){
+function ocultarModalDos() {
     estado = !estado;
     cambiarEstado(".modal-dos")
+}
+
+function eliminarComedor(index) {
+    if (confirm("¿Estás seguro de eliminar este comedor?")) {
+        window.comedorStore.deleteComedor(index);
+    }
 }
 
 window.comedorStore.suscribe(renderizarUI);
