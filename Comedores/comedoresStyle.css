@@ -1,0 +1,164 @@
+#recuadro-comedores{
+    width: 100%;;
+    height: 100%;
+}
+
+#recuadro-uno {
+    width: 100%;
+    height: 10%;
+    display: flex;
+    justify-content: space-between;
+    padding: 0 1rem 1% 1rem;
+}
+
+#recuadro-uno button{
+    padding: 0% 2% 0% 2%;
+    border-radius: 1rem;
+    background-color: blue;
+    color: white;
+}
+
+#recuadro-dos{
+    width: 100%;
+    height: 90%;
+    padding: 1rem 0 1rem 1rem;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 5%;
+    overflow-y: auto;
+}
+
+.recuadro-comedor{
+    border: solid 1px black;
+    width: 30%;
+    height: 60%;
+    padding: 1%;
+    background-color: #7dfa9e;
+    border-radius: 20px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    /* background-color: #fa7d85; //Este color es para los comedores inactivos */
+}
+
+.recuadro-imagen-comedor{
+    border: solid 1px black;
+    width: 100%;
+    height: 50%;
+}
+
+.recuadro-imagen-comedor img{
+    height: 100%;
+}
+
+.recuadro-comedor p{
+    font-size: 13px;
+    width: 100%;
+}
+
+.recuadro-comedor button:hover{
+    color: white;
+}
+
+.recuadro-modales {
+    width: 100%;
+    height: 100vh;
+    position: fixed;
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    background-color: rgba(0, 0, 0, 0.5); /* bg-black + opacity-50 */
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 50;
+    display: none;
+}
+
+#modal-uno{
+    width: 50%;
+    height: 80%;
+    padding: 2% 4% 2% 4%;
+    background-color: gainsboro;
+    border-radius: 1rem;
+    display: flex;
+    flex-direction: column;
+    display: none;
+}
+
+.modal-dos{
+    width: 50%;
+    height: 80%;
+    padding: 2% 4% 2% 4%;
+    background-color: gainsboro;
+    border-radius: 1rem;
+    display: flex;
+    flex-direction: column;
+    display: none;
+}
+
+.form-modal{
+    width: 100%;
+    height: 80%;
+    padding: 3rem 1.5rem 3rem 1.5rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+    gap: 2rem;
+}
+
+.encabezado-form{
+    width: 100%;
+    height: 10%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+.encabezado-form p{
+    font-size: 3rem;
+}
+
+.encabezado-form button{
+    width: 5%;
+}
+
+.encabezado-form img{
+    width: 100%;
+}
+
+.form-modal p{
+    font-size: 1.2rem;
+}
+
+.cuerpo1-form{
+    display: flex;   
+    justify-content: space-between;
+}
+
+.cuerpo2-form{
+    width: 100%;
+}
+
+.cuerpo2-form input{
+    width: 100%;
+}
+
+.cuerpo3-form{
+    display: flex;   
+    justify-content: space-between;
+}
+
+#cuerpo4-form-uno{
+    display: flex;
+    justify-content: center;
+    padding: 1rem;
+}
+
+#cuerpo4-form-uno button{
+    color: white;
+    padding: 2% 3% 2% 3%;
+    background-color: black;
+    border-radius: 1rem;
+    font-size: 1rem;
+}

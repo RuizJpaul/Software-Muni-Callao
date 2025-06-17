@@ -1,0 +1,216 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Gestión Comedores - Municipalidad Callao</title>
+  <!-- Tailwind CSS CDN -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    // Extender paleta de colores
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            callaoBlue: '#0057B7',
+            callaoYellow: '#FFC20E',
+            callaoPurple: '#6B21A8'
+          }
+        }
+      }
+    }
+  </script>
+</head>
+<body class="flex h-screen bg-gradient-to-r from-blue-50 to-purple-50">
+  <!-- Sidebar -->
+  <aside id="sidebar" class="bg-gradient-to-b from-callaoPurple to-callaoBlue text-white w-60 flex-shrink-0 transform -translate-x-full lg:translate-x-0 lg:relative fixed top-0 left-0 h-full z-30 transition-transform shadow-lg">
+    <div class="flex items-center justify-between h-16 px-4 border-b border-purple-700">
+      <span class="text-3xl font-extrabold bg-clip-text text-transparent bg-gradient-to-r from-callaoYellow to-red-500">🌊 Callao</span>
+      <button id="btnSidebarClose" class="lg:hidden focus:outline-none text-2xl">&times;</button>
+    </div>
+    <nav class="p-4 space-y-1">
+ <a href="/Index_Principal.html" class="flex items-center px-3 py-2 rounded-lg hover:bg-purple-700 transition">🏠 <span class="ml-2">Dashboard</span></a>
+      <a href="./Comedores/comedores.html" class="flex items-center px-3 py-2 rounded-lg hover:bg-purple-700 transition">🏛️ <span class="ml-2">Comedores</span></a>
+      <a href="beneficiarios.html" class="flex items-center px-3 py-2 rounded-lg hover:bg-purple-700 transition">👥 <span class="ml-2">Beneficiarios</span></a>
+      <a href="/entregas/entregas.html" class="flex items-center px-3 py-2 rounded-lg hover:bg-purple-700 transition">🍽️ <span class="ml-2">Entregas</span></a>
+      <a href="#" class="flex items-center px-3 py-2 rounded-lg hover:bg-purple-700 transition">🔒 <span class="ml-2">Usuarios</span></a>
+      <a href="#" class="flex items-center px-3 py-2 rounded-lg hover:bg-purple-700 transition">📊 <span class="ml-2">Panel</span></a>
+      <a href="#" class="flex items-center px-3 py-2 rounded-lg hover:bg-purple-700 transition">🕵️ <span class="ml-2">Auditoría</span></a>
+    </nav>
+  </aside>
+
+  <!-- Main content wrapper -->
+  <div class="flex-1 flex flex-col">
+    <!-- Header -->
+    <header class="h-16 bg-gradient-to-r from-pink-500 to-red-500 flex items-center px-6 shadow-md">
+      <button id="btnSidebarOpen" class="lg:hidden mr-4 focus:outline-none text-2xl text-white">&#9776;</button>
+      <h1 class="text-2xl font-bold text-white">Dashboard 🎉</h1>
+    </header>
+
+ <main class="flex-1 overflow-y-auto p-6">
+
+  <div class="w-full px-4 sm:px-8">
+    <h1 class="text-3xl font-bold mb-4">Consultar Beneficiario</h1>
+
+    <div class="flex flex-col md:flex-row md:space-x-4 mb-6">
+      <input id="buscarInput" type="text" placeholder="Buscar por nombre o DNI" class="w-full md:w-1/2 p-2 border rounded mb-2 md:mb-0">
+
+      <select id="filtroComedor" class="w-full md:w-1/4 p-2 border rounded">
+        <option value="">Todos los comedores</option>
+        <option value="Comedor Teresa Izquierdo">Comedor Teresa Izquierdo</option>
+        <option value="Comedor C.Adulto Mayor Bocanegra">Comedor C.Adulto Mayor Bocanegra</option>
+      </select>
+
+      <select id="filtroEstado" class="w-full md:w-1/4 p-2 border rounded">
+        <option value="">Todos los estados</option>
+        <option value="Activo">Activo</option>
+        <option value="Inactivo">Inactivo</option>
+      </select>
+    </div>
+
+    <div class="overflow-x-auto">
+      <table class="min-w-full bg-white shadow-md rounded overflow-hidden">
+        <thead class="bg-gray-200">
+          <tr>
+            <th class="p-2 text-left">Tipo Doc</th>
+            <th class="p-2 text-left">N° Documento</th>
+            <th class="p-2 text-left">Nombres</th>
+            <th class="p-2 text-left">Apellidos</th>
+            <th class="p-2 text-left">F. Nacimiento</th>
+            <th class="p-2 text-left">Edad</th>
+            <th class="p-2 text-left">Sexo</th>
+            <th class="p-2 text-left">Dirección</th>
+            <th class="p-2 text-left">Teléfono</th>
+            <th class="p-2 text-left">Estado Civil</th>
+            <th class="p-2 text-left">N° Hijos</th>
+            <th class="p-2 text-left">Condición</th>
+            <th class="p-2 text-left">Comedor</th>
+            <th class="p-2 text-left">Estado</th>
+            <th class="p-2 text-left">Acciones</th>
+          </tr>
+        </thead>
+        <tbody id="tablaBeneficiarios"></tbody>
+      </table>
+    </div>
+  </div>
+
+  <!-- Modal -->
+  <div id="modalEditar" class="fixed inset-0 hidden bg-black bg-opacity-50 flex items-center justify-center z-50">
+    <div class="bg-white p-6 rounded-lg w-full max-w-2xl">
+      <h2 class="text-xl font-semibold mb-4">Editar Beneficiario</h2>
+      <form id="formEditar">
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div>
+            <label class="block text-sm">Tipo Documento</label>
+            <select id="editTipoDocumento" class="w-full p-2 border rounded">
+              <option>DNI</option>
+              <option>CE</option>
+              <option>Pasaporte</option>
+              <option>Otros</option>
+            </select>
+          </div>
+          <div>
+            <label class="block text-sm">N° Documento</label>
+            <input id="editNumeroDocumento" type="text" class="w-full p-2 border rounded" readonly>
+          </div>
+          <div>
+            <label class="block text-sm">Nombres</label>
+            <input id="editNombres" type="text" class="w-full p-2 border rounded">
+          </div>
+          <div>
+            <label class="block text-sm">Apellidos</label>
+            <input id="editApellidos" type="text" class="w-full p-2 border rounded">
+          </div>
+          <div>
+            <label class="block text-sm">Fecha Nacimiento</label>
+            <input id="editFechaNacimiento" type="date" class="w-full p-2 border rounded">
+          </div>
+          <div>
+            <label class="block text-sm">Edad</label>
+            <input id="editEdad" type="number" class="w-full p-2 border rounded">
+          </div>
+          <div>
+            <label class="block text-sm">Sexo</label>
+            <select id="editSexo" class="w-full p-2 border rounded">
+              <option>Masculino</option>
+              <option>Femenino</option>
+            </select>
+          </div>
+          <div>
+            <label class="block text-sm">Dirección</label>
+            <input id="editDireccion" type="text" class="w-full p-2 border rounded">
+          </div>
+          <div>
+            <label class="block text-sm">Teléfono</label>
+            <input id="editTelefono" type="text" class="w-full p-2 border rounded">
+          </div>
+          <div>
+            <label class="block text-sm">Estado Civil</label>
+            <select id="editEstadoCivil" class="w-full p-2 border rounded">
+              <option>Soltero(a)</option>
+              <option>Casado(a)</option>
+              <option>Viudo(a)</option>
+              <option>Divorciado(a)</option>
+              <option>Separado(a)</option>
+            </select>
+          </div>
+          <div>
+            <label class="block text-sm">N° Hijos</label>
+            <input id="editHijos" type="number" class="w-full p-2 border rounded">
+          </div>
+          <div>
+            <label class="block text-sm">Condición</label>
+            <select id="editCondicion" class="w-full p-2 border rounded">
+              <option>Vulnerable - Madre Soltera</option>
+              <option>Vulnerable - Padre soltero</option>
+              <option>Otros</option>
+            </select>
+          </div>
+          <div>
+            <label class="block text-sm">Comedor</label>
+            <select id="editComedor" class="w-full p-2 border rounded">
+              <option>Comedor Teresa Izquierdo</option>
+              <option>Comedor C.Adulto Mayor Bocanegra</option>
+            </select>
+          </div>
+          <div>
+            <label class="block text-sm">Estado</label>
+            <select id="editEstado" class="w-full p-2 border rounded">
+              <option>Activo</option>
+              <option>Inactivo</option>
+            </select>
+          </div>
+        </div>
+        <div class="flex justify-end space-x-2 mt-4">
+          <button type="button" id="btnCancelar" class="px-4 py-2 bg-gray-300 rounded">Cancelar</button>
+          <button type="submit" class="px-4 py-2 bg-blue-600 text-white rounded">Guardar Cambios</button>
+        </div>
+      </form>
+    </div>
+  </div>
+
+</main>
+
+
+    <!-- Footer -->
+    <footer class="h-12 bg-gradient-to-r from-callaoBlue to-indigo-700 flex items-center justify-center text-white">
+      <span class="text-sm">v1.0 • Municipalidad Provincial del Callao</span>
+    </footer>
+  </div>
+
+  <!-- JavaScript: Toggle Sidebar -->
+  <script>
+    const sidebar = document.getElementById('sidebar');
+    const btnOpen = document.getElementById('btnSidebarOpen');
+    const btnClose = document.getElementById('btnSidebarClose');
+    btnOpen.addEventListener('click', () => sidebar.classList.remove('-translate-x-full'));
+    btnClose.addEventListener('click', () => sidebar.classList.add('-translate-x-full'));
+  </script>
+
+
+
+
+
+<script src="./consultarBeneficiario.js"></script>
+</body>
+</html>
