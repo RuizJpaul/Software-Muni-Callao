@@ -3,153 +3,193 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <base href="/Software-Muni-Callao/" />
   <title>Entregas – Gestión Comedores</title>
   <!-- Tailwind CSS -->
   <script src="https://cdn.tailwindcss.com"></script>
   <!-- SweetAlert2 -->
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
   <script>
-    // Extender paleta personalizada
     tailwind.config = { theme: { extend: { colors: { callaoBlue: '#0057B7', callaoYellow: '#FFC20E', callaoPurple: '#6B21A8' } } } };
   </script>
 </head>
 <body class="flex h-screen bg-gradient-to-r from-blue-50 to-purple-50">
-  <!-- Sidebar (igual al principal) -->
+  <!-- Sidebar -->
   <aside id="sidebar" class="bg-gradient-to-b from-callaoPurple to-callaoBlue text-white w-60 fixed h-full shadow-lg transform -translate-x-full lg:translate-x-0 transition-transform">
     <div class="flex items-center justify-between h-16 px-4 border-b border-purple-700">
       <span class="text-3xl font-extrabold bg-clip-text text-transparent bg-gradient-to-r from-callaoYellow to-red-500">🌊 Callao</span>
       <button id="btnSidebarClose" class="lg:hidden text-2xl">&times;</button>
     </div>
     <nav class="p-4 space-y-1">
-      <a href="../Index_Principal.html" class="flex items-center px-3 py-2 rounded-lg hover:bg-purple-700 transition">🏠<span class="ml-2">Dashboard</span></a>
-      <a href="../Comedores/comedores.html" class="flex items-center px-3 py-2 rounded-lg hover:bg-purple-700 transition">🏛️<span class="ml-2">Comedores</span></a>
-      <a href="../beneficiarios/beneficiarios.html" class="flex items-center px-3 py-2 rounded-lg hover:bg-purple-700 transition">👥<span class="ml-2">Beneficiarios</span></a>
-      <a href="entregas.html" class="flex items-center px-3 py-2 rounded-lg bg-purple-800/50 transition">🍽️<span class="ml-2">Entregas</span></a>
-      <a href="#" class="flex items-center px-3 py-2 rounded-lg hover:bg-purple-700 transition">🔒<span class="ml-2">Usuarios</span></a>
-      <a href="#" class="flex items-center px-3 py-2 rounded-lg hover:bg-purple-700 transition">📊<span class="ml-2">Panel</span></a>
-      <a href="#" class="flex items-center px-3 py-2 rounded-lg hover:bg-purple-700 transition">🕵️<span class="ml-2">Auditoría</span></a>
+      <a href="Index_Principal.html" class="flex items-center px-3 py-2 rounded-lg hover:bg-purple-700 transition transform hover:scale-105 cursor-pointer">🏠<span class="ml-2">Dashboard</span></a>
+      <a href="Comedores/comedores.html" class="flex items-center px-3 py-2 rounded-lg hover:bg-purple-700 transition transform hover:scale-105 cursor-pointer">🏛️<span class="ml-2">Comedores</span></a>
+      <a href="beneficiarios/beneficiarios.html" class="flex items-center px-3 py-2 rounded-lg hover:bg-purple-700 transition transform hover:scale-105 cursor-pointer">👥<span class="ml-2">Beneficiarios</span></a>
+      <a href="entregas/entregas.html" class="flex items-center px-3 py-2 rounded-lg bg-purple-800/50 transition transform hover:scale-105 cursor-pointer">🍽️<span class="ml-2">Entregas</span></a>
     </nav>
   </aside>
 
-  <!-- Main content -->
   <div class="flex-1 flex flex-col ml-60">
-    <!-- Header -->
     <header class="h-16 bg-gradient-to-r from-pink-500 to-red-500 flex items-center px-6 shadow-md">
-      <button id="btnSidebarOpen" class="lg:hidden mr-4 text-2xl text-white">&#9776;</button>
+      <button id="btnSidebarOpen" class="lg:hidden mr-4 text-2xl text-white cursor-pointer">&#9776;</button>
       <h1 class="text-2xl font-bold text-white">Registro de Entregas</h1>
     </header>
 
-    <!-- Main area -->
     <main class="flex-1 overflow-y-auto p-6">
-      <!-- Contenedor card para la tabla -->
       <div class="bg-white p-6 rounded-lg shadow-lg">
-        <div class="overflow-x-auto">
+        <!-- Filtros -->
+        <div class="mb-4 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+          <div>
+            <label for="filterDni" class="block text-sm font-medium text-gray-700">Filtrar por DNI</label>
+            <input id="filterDni" type="text" placeholder="12345678" class="mt-1 block w-full p-2 border border-gray-300 rounded" />
+          </div>
+          <div>
+            <label for="filterName" class="block text-sm font-medium text-gray-700">Filtrar por Nombre</label>
+            <input id="filterName" type="text" placeholder="Ana Torres" class="mt-1 block w-full p-2 border border-gray-300 rounded" />
+          </div>
+          <div>
+            <label for="filterComedor" class="block text-sm font-medium text-gray-700">Filtrar por Comedor</label>
+            <input id="filterComedor" type="text" placeholder="San Pedro" class="mt-1 block w-full p-2 border border-gray-300 rounded" />
+          </div>
+        </div>
+        <div class="overflow-x-auto overflow-y-auto max-h-96">
           <table class="min-w-full border-collapse">
             <thead class="bg-callaoBlue text-white">
               <tr>
                 <th class="py-2 px-4 text-left">DNI</th>
                 <th class="py-2 px-4 text-left">Nombre</th>
                 <th class="py-2 px-4 text-left">Comedor</th>
-                <th class="py-2 px-4 text-left">Estado</th>
+                <th class="py-2 px-4 text-left">Tipo</th>
                 <th class="py-2 px-4 text-left">Fecha</th>
                 <th class="py-2 px-4 text-left">Hora</th>
                 <th class="py-2 px-4 text-left">Veces</th>
                 <th class="py-2 px-4 text-left">Acciones</th>
               </tr>
             </thead>
-            <tbody id="entregas-body" class="divide-y">
-              <!-- Filas generadas por JS -->
-            </tbody>
+            <tbody id="entregas-body" class="divide-y"></tbody>
           </table>
         </div>
       </div>
     </main>
 
-    <!-- Footer -->
     <footer class="h-12 bg-gradient-to-r from-callaoBlue to-indigo-700 flex items-center justify-center text-white">
       <span class="text-sm">v1.0 • Municipalidad Provincial del Callao</span>
     </footer>
   </div>
 
   <script>
-    // Datos y persistencia
-    let beneficiaries = JSON.parse(localStorage.getItem('deliveries')) || [];
-    let corrections = JSON.parse(localStorage.getItem('corrections')) || [];
-    function saveData() {
-      localStorage.setItem('deliveries', JSON.stringify(beneficiaries));
-      localStorage.setItem('corrections', JSON.stringify(corrections));
-    }
+    function loadJSON(key) { try { const raw = localStorage.getItem(key); const p = JSON.parse(raw); return Array.isArray(p) ? p : []; } catch { return []; } }
+    function saveJSON(key, data) { try { localStorage.setItem(key, JSON.stringify(data)); } catch {} }
 
-    // Formato fecha/hora
-    function formatDateTime(dt) {
-      return { fecha: dt.toLocaleDateString('es-PE'), hora: dt.toLocaleTimeString('es-PE', {hour:'2-digit', minute:'2-digit'}) };
-    }
+    let beneficiaries = loadJSON('beneficiarios');
+    let history = loadJSON('deliveriesHistory');
+    let fDNI = '', fName = '', fCom = '';
 
-    // Render tabla entregas
-    function renderEntregas() {
+    const debounce = (fn, d) => { let t; return (...a) => { clearTimeout(t); t = setTimeout(() => fn(...a), d); }; };
+    const fmt = dt => ({ fecha: dt.toLocaleDateString('es-PE'), hora: dt.toLocaleTimeString('es-PE',{hour:'2-digit',minute:'2-digit'}) });
+    const filterList = l => l.filter(b => { const d = (b.numeroDocumento||b.dni||'').toLowerCase(); const n = ((b.nombres?b.nombres+' '+(b.apellidos||''):b.nombre)||'').toLowerCase(); const c = (b.comedor||'').toLowerCase(); return (!fDNI||d.includes(fDNI)) && (!fName||n.includes(fName)) && (!fCom||c.includes(fCom)); });
+
+    function render() {
+      beneficiaries = loadJSON('beneficiarios');
       const tbody = document.getElementById('entregas-body'); tbody.innerHTML = '';
-      beneficiaries.forEach((b, i) => {
-        const { fecha, hora } = b.fechaEntrega ? formatDateTime(new Date(b.fechaEntrega)) : { fecha: '', hora: '' };
-        const tr = document.createElement('tr');
+      const list = filterList(beneficiaries);
+      if (!list.length) { tbody.innerHTML = '<tr><td colspan="8" class="py-4 text-center text-gray-500">No hay beneficiarios</td></tr>'; return; }
+      list.forEach((b,i) => {
+        const dni = b.numeroDocumento||b.dni;
+        const nombre = b.nombres?`${b.nombres} ${b.apellidos||''}`:b.nombre;
+        const comedor = b.comedor;
+        const tipo = b.mealType||'-';
+        const cnt = typeof b.count==='number'?b.count:0;
+        const {fecha,hora} = b.fechaEntrega?fmt(new Date(b.fechaEntrega)):{fecha:'',hora:''};
+        const tr = document.createElement('tr'); tr.className = 'border-b';
         tr.innerHTML = `
-          <td class="py-2 px-4">${b.dni}</td>
-          <td class="py-2 px-4">${b.name}</td>
-          <td class="py-2 px-4">${b.comedor}</td>
-          <td id="status-${i}" class="py-2 px-4">${b.status || 'Pendiente'}</td>
-          <td id="fecha-${i}" class="py-2 px-4">${fecha}</td>
-          <td id="hora-${i}" class="py-2 px-4">${hora}</td>
-          <td id="count-${i}" class="py-2 px-4">${b.count || 0}</td>
+          <td class="py-2 px-4">${dni}</td>
+          <td class="py-2 px-4">${nombre}</td>
+          <td class="py-2 px-4">${comedor}</td>
+          <td class="py-2 px-4">${tipo}</td>
+          <td class="py-2 px-4">${fecha}</td>
+          <td class="py-2 px-4">${hora}</td>
+          <td class="py-2 px-4">${cnt}</td>
           <td class="py-2 px-4 flex space-x-2">
-            <button id="btn-${i}" class="bg-callaoYellow text-white px-3 py-1 rounded hover:opacity-90 transition">Entregar</button>
-            <button id="edit-${i}" class="bg-gray-300 text-black px-3 py-1 rounded hover:bg-gray-400 transition">Editar</button>
+            <button id="btn-${i}" class="bg-callaoYellow text-white px-3 py-1 rounded transition transform hover:scale-105 active:scale-95 cursor-pointer">Entregar</button>
+            <button id="hist-${i}" class="bg-callaoPurple text-white px-3 py-1 rounded transition transform hover:scale-105 active:scale-95 cursor-pointer">Historial</button>
           </td>`;
         tbody.appendChild(tr);
+      }); attach();
+    }
 
-        // Botón Entregar
-        document.getElementById(`btn-${i}`).onclick = () => {
-          const now = new Date(), today = now.toLocaleDateString('es-PE');
-          const last = b.fechaEntrega ? new Date(b.fechaEntrega).toLocaleDateString('es-PE') : null;
-          const doDeliver = () => {
-            b.status = 'Entregado'; b.fechaEntrega = now.toISOString(); b.count = (b.count || 0) + 1;
-            saveData(); renderEntregas();
-          };
-          if (last === today) {
-            Swal.fire({ title: 'Entrega duplicada hoy', text: '¿Agregar de todas formas?', icon: 'warning', showCancelButton: true, confirmButtonText: 'Sí', cancelButtonText: 'No' })
-              .then(res => res.isConfirmed && doDeliver());
-          } else doDeliver();
-        };
+    ['filterDni','filterName','filterComedor'].forEach(id => document.getElementById(id).addEventListener('input', debounce(e => { if(id==='filterDni') fDNI=e.target.value.trim().toLowerCase(); if(id==='filterName') fName=e.target.value.trim().toLowerCase(); if(id==='filterComedor') fCom=e.target.value.trim().toLowerCase(); render(); }, 300)));
 
-        // Botón Editar
-        document.getElementById(`edit-${i}`).onclick = () => {
-          Swal.fire({
-            title: 'Corregir entrega',
-            html: `<p class="mb-2">Beneficiario: ${b.name} (${b.dni})</p><input id="swal-name" class="swal2-input" placeholder="Tu nombre"/><input id="swal-dni" class="swal2-input" placeholder="Tu DNI"/>`,
-            showCancelButton: true, focusConfirm: false,
-            preConfirm: () => {
-              const u = document.getElementById('swal-name').value;
-              const D = document.getElementById('swal-dni').value;
-              if (!u || !D) Swal.showValidationMessage('Nombre y DNI son obligatorios');
-              return { u, D };
-            }
-          }).then(r => {
-            if (r.isConfirmed) {
-              if (b.count > 0) b.count--; 
-              corrections.push({ beneficiario: b.dni, corregidoPor: r.value.u, dniCorregidoPor: r.value.D, fecha: new Date().toISOString() });
-              saveData(); renderEntregas();
-              Swal.fire('Corregido', 'Se ha registrado la corrección y ajustado el contador.', 'success');
-            }
-          });
-        };
+    function attach() {
+      beneficiaries.forEach((b,i) => {
+        document.getElementById(`btn-${i}`).onclick = deliver(b);
+        document.getElementById(`hist-${i}`).onclick = showHist(b);
       });
     }
 
-    // Toggle sidebar móvil
+    function deliver(b) {
+      return () => {
+        Swal.fire({
+          title: 'Tipo de comida',
+          input: 'select',
+          inputOptions: { Desayuno: 'Desayuno', Almuerzo: 'Almuerzo', Cena: 'Cena' },
+          showCancelButton: true,
+          inputValidator: v => v ? null : 'Requerido'
+        }).then(r => {
+          if(r.isConfirmed) {
+            const now = new Date(); const {fecha,hora} = fmt(now);
+            b.mealType = r.value; b.fechaEntrega = now.toISOString(); b.count = (b.count||0)+1;
+            saveJSON('beneficiarios', beneficiaries);
+            history.push({ dni:b.numeroDocumento||b.dni, nombre:b.nombres?`${b.nombres} ${b.apellidos||''}`:b.nombre, tipo:r.value, fecha, hora, comedor:b.comedor });
+            saveJSON('deliveriesHistory', history);
+            render();
+          }
+        });
+      };
+    }
+
+    function showHist(b) {
+      return () => {
+        let his = loadJSON('deliveriesHistory').map((h,idx)=>({...h,idx})).filter(h=>h.dni === (b.numeroDocumento||b.dni));
+        if(!his.length) { Swal.fire('Sin historial','No hay registros','info'); return; }
+        const rows = his.map(h => `<tr class="border-b"><td class="py-1 px-2">${h.dni}</td><td class="py-1 px-2">${h.nombre}</td><td class="py-1 px-2">${h.tipo}</td><td class="py-1 px-2">${h.fecha}</td><td class="py-1 px-2">${h.hora}</td><td class="py-1 px-2">${h.comedor}</td><td class="py-1 px-2"><button data-idx="${h.idx}" class="del-btn bg-red-500 text-white px-2 py-1 rounded transition transform hover:scale-105 cursor-pointer">Eliminar</button></td></tr>`).join('');
+        const table = `<table class="min-w-full text-sm"><thead class="bg-callaoBlue text-white"><tr><th class="py-2 px-2">DNI</th><th class="py-2 px-2">Nombre</th><th class="py-2 px-2">Tipo</th><th class="py-2 px-2">Fecha</th><th class="py-2 px-2">Hora</th><th class="py-2 px-2">Comedor</th><th class="py-2 px-2">Acciones</th></tr></thead><tbody>${rows}</tbody></table>`;
+        Swal.fire({
+          title: 'Historial',
+          html: `<div class="max-h-80 overflow-auto">${table}</div>`,
+          width: '80%', showCloseButton: true, showConfirmButton: false,
+          didOpen: () => {
+            const c = Swal.getHtmlContainer();
+            c.querySelectorAll('.del-btn').forEach(btn => btn.addEventListener('click', () => {
+              Swal.fire({
+                title: 'Confirmar eliminación',
+                html: '<input id="res-name" class="swal2-input" placeholder="Responsable (Nombre)"/><input id="res-dni" class="swal2-input" placeholder="Responsable (DNI)"/>',
+                showCancelButton: true,
+                preConfirm: () => {
+                  const n = document.getElementById('res-name').value;
+                  const d = document.getElementById('res-dni').value;
+                  if(!n || !d) Swal.showValidationMessage('Nombre y DNI requeridos');
+                  return { n, d };
+                }
+              }).then(r2 => {
+                if(r2.isConfirmed) {
+                  history = loadJSON('deliveriesHistory');
+                  history.splice(btn.dataset.idx, 1);
+                  saveJSON('deliveriesHistory', history);
+                  showHist(b)();
+                }
+              });
+            }));
+          }
+        });
+      };
+    }
+
     const sb = document.getElementById('sidebar');
     document.getElementById('btnSidebarOpen').onclick = () => sb.classList.remove('-translate-x-full');
     document.getElementById('btnSidebarClose').onclick = () => sb.classList.add('-translate-x-full');
 
-    // Inicialización
-    renderEntregas();
+    render();
   </script>
 </body>
 </html>
+
