@@ -1,4 +1,3 @@
-// scriptConsultarBeneficiario.js
 
 document.addEventListener("DOMContentLoaded", () => {
   const beneficiarios = JSON.parse(localStorage.getItem("beneficiarios")) || [];
@@ -33,7 +32,7 @@ document.addEventListener("DOMContentLoaded", () => {
         <td class="p-2">${b.comedor}</td>
         <td class="p-2">${b.estado}</td>
         <td class="p-2">
-          <button class="old text-blue-600 underline" onclick="editarBeneficiario('${b.numeroDocumento}')">Editar</button>
+          <button class="px-4 py-2 bg-yellow-500 text-white rounded hover:bg-green-400" onclick="editarBeneficiario('${b.numeroDocumento}')">Editar</button>
         </td>
       `;
       tabla.appendChild(fila);
@@ -44,7 +43,7 @@ document.addEventListener("DOMContentLoaded", () => {
     beneficiarioEditando = beneficiarios.find(b => b.numeroDocumento === numeroDocumento);
     if (!beneficiarioEditando) return;
 
-    // Rellenar el formulario con los valores actuales
+
     document.getElementById("editTipoDocumento").value = beneficiarioEditando.tipoDocumento;
     document.getElementById("editNumeroDocumento").value = beneficiarioEditando.numeroDocumento;
     document.getElementById("editNombres").value = beneficiarioEditando.nombres;
@@ -71,7 +70,7 @@ document.addEventListener("DOMContentLoaded", () => {
     e.preventDefault();
     if (!beneficiarioEditando) return;
 
-    // Actualizar datos
+
     beneficiarioEditando.tipoDocumento = document.getElementById("editTipoDocumento").value;
     beneficiarioEditando.nombres = document.getElementById("editNombres").value;
     beneficiarioEditando.apellidos = document.getElementById("editApellidos").value;
@@ -86,7 +85,7 @@ document.addEventListener("DOMContentLoaded", () => {
     beneficiarioEditando.comedor = document.getElementById("editComedor").value;
     beneficiarioEditando.estado = document.getElementById("editEstado").value;
 
-    // Guardar y recargar
+
     localStorage.setItem("beneficiarios", JSON.stringify(beneficiarios));
     renderTabla(beneficiarios);
     modal.classList.add("hidden");
