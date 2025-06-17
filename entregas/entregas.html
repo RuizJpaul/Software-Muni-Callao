@@ -3,176 +3,153 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>Gestión Comedores - Plantilla Completa</title>
-
+  <title>Entregas – Gestión Comedores</title>
+  <!-- Tailwind CSS -->
   <script src="https://cdn.tailwindcss.com"></script>
-
+  <!-- SweetAlert2 -->
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
   <script>
+    // Extender paleta personalizada
     tailwind.config = { theme: { extend: { colors: { callaoBlue: '#0057B7', callaoYellow: '#FFC20E', callaoPurple: '#6B21A8' } } } };
   </script>
 </head>
 <body class="flex h-screen bg-gradient-to-r from-blue-50 to-purple-50">
-
+  <!-- Sidebar (igual al principal) -->
   <aside id="sidebar" class="bg-gradient-to-b from-callaoPurple to-callaoBlue text-white w-60 fixed h-full shadow-lg transform -translate-x-full lg:translate-x-0 transition-transform">
     <div class="flex items-center justify-between h-16 px-4 border-b border-purple-700">
       <span class="text-3xl font-extrabold bg-clip-text text-transparent bg-gradient-to-r from-callaoYellow to-red-500">🌊 Callao</span>
       <button id="btnSidebarClose" class="lg:hidden text-2xl">&times;</button>
     </div>
     <nav class="p-4 space-y-1">
-      <button onclick="showSection('dashboard')" class="w-full text-left flex items-center px-3 py-2 rounded-lg hover:bg-purple-700 transition">🏠<span class="ml-2">Dashboard</span></button>
-      <button onclick="showSection('comedor')" class="w-full text-left flex items-center px-3 py-2 rounded-lg hover:bg-purple-700 transition">🏛️<span class="ml-2">Comedores</span></button>
-      <button onclick="showSection('beneficiarios')" class="w-full text-left flex items-center px-3 py-2 rounded-lg hover:bg-purple-700 transition">👥<span class="ml-2">Beneficiarios</span></button>
-      <button onclick="showSection('entregas')" class="w-full text-left flex items-center px-3 py-2 rounded-lg hover:bg-purple-700 transition">🍽️<span class="ml-2">Entregas</span></button>
-      <button onclick="showSection('usuarios')" class="w-full text-left flex items-center px-3 py-2 rounded-lg hover:bg-purple-700 transition">🔒<span class="ml-2">Usuarios</span></button>
-      <button onclick="showSection('panel')" class="w-full text-left flex items-center px-3 py-2 rounded-lg hover:bg-purple-700 transition">📊<span class="ml-2">Panel</span></button>
-      <button onclick="showSection('auditoria')" class="w-full text-left flex items-center px-3 py-2 rounded-lg hover:bg-purple-700 transition">🕵️<span class="ml-2">Auditoría</span></button>
+      <a href="../Index_Principal.html" class="flex items-center px-3 py-2 rounded-lg hover:bg-purple-700 transition">🏠<span class="ml-2">Dashboard</span></a>
+      <a href="../Comedores/comedores.html" class="flex items-center px-3 py-2 rounded-lg hover:bg-purple-700 transition">🏛️<span class="ml-2">Comedores</span></a>
+      <a href="../beneficiarios/beneficiarios.html" class="flex items-center px-3 py-2 rounded-lg hover:bg-purple-700 transition">👥<span class="ml-2">Beneficiarios</span></a>
+      <a href="entregas.html" class="flex items-center px-3 py-2 rounded-lg bg-purple-800/50 transition">🍽️<span class="ml-2">Entregas</span></a>
+      <a href="#" class="flex items-center px-3 py-2 rounded-lg hover:bg-purple-700 transition">🔒<span class="ml-2">Usuarios</span></a>
+      <a href="#" class="flex items-center px-3 py-2 rounded-lg hover:bg-purple-700 transition">📊<span class="ml-2">Panel</span></a>
+      <a href="#" class="flex items-center px-3 py-2 rounded-lg hover:bg-purple-700 transition">🕵️<span class="ml-2">Auditoría</span></a>
     </nav>
   </aside>
 
-
+  <!-- Main content -->
   <div class="flex-1 flex flex-col ml-60">
-
+    <!-- Header -->
     <header class="h-16 bg-gradient-to-r from-pink-500 to-red-500 flex items-center px-6 shadow-md">
       <button id="btnSidebarOpen" class="lg:hidden mr-4 text-2xl text-white">&#9776;</button>
-      <h1 id="page-title" class="text-2xl font-bold text-white">Dashboard 🎉</h1>
+      <h1 class="text-2xl font-bold text-white">Registro de Entregas</h1>
     </header>
+
+    <!-- Main area -->
     <main class="flex-1 overflow-y-auto p-6">
-  
-      <section id="dashboard" class="space-y-6">
-        <p class="text-gray-700">Bienvenido al sistema de gestión de comedores populares.</p>
-      </section>
-
-      <section id="comedor" class="hidden"><h2 class="text-2xl font-semibold mb-4 text-callaoYellow">Módulo Comedores</h2></section>
-      <section id="beneficiarios" class="hidden"><h2 class="text-2xl font-semibold mb-4 text-callaoBlue">Módulo Beneficiarios</h2></section>
-
-      <section id="entregas" class="hidden">
-        <h2 class="text-2xl font-semibold mb-4 text-callaoPurple">Registro de Entregas</h2>
+      <!-- Contenedor card para la tabla -->
+      <div class="bg-white p-6 rounded-lg shadow-lg">
         <div class="overflow-x-auto">
-          <table class="min-w-full bg-white rounded-lg shadow">
+          <table class="min-w-full border-collapse">
             <thead class="bg-callaoBlue text-white">
               <tr>
-                <th class="py-2 px-4">DNI</th>
-                <th class="py-2 px-4">Nombre</th>
-                <th class="py-2 px-4">Comedor</th>
-                <th class="py-2 px-4">Estado</th>
-                <th class="py-2 px-4">Fecha</th>
-                <th class="py-2 px-4">Hora</th>
-                <th class="py-2 px-4">Veces</th>
-                <th class="py-2 px-4">Acciones</th>
+                <th class="py-2 px-4 text-left">DNI</th>
+                <th class="py-2 px-4 text-left">Nombre</th>
+                <th class="py-2 px-4 text-left">Comedor</th>
+                <th class="py-2 px-4 text-left">Estado</th>
+                <th class="py-2 px-4 text-left">Fecha</th>
+                <th class="py-2 px-4 text-left">Hora</th>
+                <th class="py-2 px-4 text-left">Veces</th>
+                <th class="py-2 px-4 text-left">Acciones</th>
               </tr>
             </thead>
-            <tbody id="entregas-body"></tbody>
+            <tbody id="entregas-body" class="divide-y">
+              <!-- Filas generadas por JS -->
+            </tbody>
           </table>
         </div>
-      </section>
-      <section id="usuarios" class="hidden"><h2 class="text-2xl font-semibold mb-4 text-green-600">Módulo Usuarios</h2></section>
-      <section id="panel" class="hidden"><h2 class="text-2xl font-semibold mb-4 text-yellow-600">Panel de Administración</h2></section>
-      <section id="auditoria" class="hidden"><h2 class="text-2xl font-semibold mb-4 text-red-600">Auditoría y Logs</h2></section>
+      </div>
     </main>
 
+    <!-- Footer -->
     <footer class="h-12 bg-gradient-to-r from-callaoBlue to-indigo-700 flex items-center justify-center text-white">
       <span class="text-sm">v1.0 • Municipalidad Provincial del Callao</span>
     </footer>
   </div>
 
   <script>
-
-    let beneficiaries = JSON.parse(localStorage.getItem('deliveries')) || [
-      { dni: '07564321', name: 'María Quispe', comedor: 'Virgen del Carmen', status: 'Pendiente', count: 0, fechaEntrega: null },
-      { dni: '46982137', name: 'Carlos Ramos', comedor: 'San Pedro', status: 'Pendiente', count: 0, fechaEntrega: null },
-      { dni: '12345678', name: 'Ana Torres', comedor: 'Santa Rosa de Lima', status: 'Pendiente', count: 0, fechaEntrega: null }
-    ];
+    // Datos y persistencia
+    let beneficiaries = JSON.parse(localStorage.getItem('deliveries')) || [];
     let corrections = JSON.parse(localStorage.getItem('corrections')) || [];
     function saveData() {
       localStorage.setItem('deliveries', JSON.stringify(beneficiaries));
       localStorage.setItem('corrections', JSON.stringify(corrections));
     }
 
-
-    function showSection(id) {
-      document.querySelectorAll('main section').forEach(s => s.classList.add('hidden'));
-      document.getElementById(id).classList.remove('hidden');
-      const titles = { dashboard: 'Dashboard 🎉', comedor: 'Comedores', beneficiarios: 'Beneficiarios', entregas: 'Registro Entregas', usuarios: 'Usuarios', panel: 'Panel', auditoria: 'Auditoría' };
-      document.getElementById('page-title').innerText = titles[id] || '';
-      if (id === 'entregas') renderEntregas();
-    }
-
-
+    // Formato fecha/hora
     function formatDateTime(dt) {
-      return { fecha: dt.toLocaleDateString('es-PE'), hora: dt.toLocaleTimeString('es-PE', { hour: '2-digit', minute: '2-digit' }) };
+      return { fecha: dt.toLocaleDateString('es-PE'), hora: dt.toLocaleTimeString('es-PE', {hour:'2-digit', minute:'2-digit'}) };
     }
 
-
+    // Render tabla entregas
     function renderEntregas() {
       const tbody = document.getElementById('entregas-body'); tbody.innerHTML = '';
       beneficiaries.forEach((b, i) => {
-        const tr = document.createElement('tr'); tr.className = 'border-b';
         const { fecha, hora } = b.fechaEntrega ? formatDateTime(new Date(b.fechaEntrega)) : { fecha: '', hora: '' };
+        const tr = document.createElement('tr');
         tr.innerHTML = `
           <td class="py-2 px-4">${b.dni}</td>
           <td class="py-2 px-4">${b.name}</td>
           <td class="py-2 px-4">${b.comedor}</td>
-          <td id="status-${i}" class="py-2 px-4">${b.status}</td>
+          <td id="status-${i}" class="py-2 px-4">${b.status || 'Pendiente'}</td>
           <td id="fecha-${i}" class="py-2 px-4">${fecha}</td>
           <td id="hora-${i}" class="py-2 px-4">${hora}</td>
-          <td id="count-${i}" class="py-2 px-4">${b.count}</td>
-          <td class="py-2 px-4">
+          <td id="count-${i}" class="py-2 px-4">${b.count || 0}</td>
+          <td class="py-2 px-4 flex space-x-2">
             <button id="btn-${i}" class="bg-callaoYellow text-white px-3 py-1 rounded hover:opacity-90 transition">Entregar</button>
-            <button id="edit-${i}" class="bg-gray-300 text-black px-3 py-1 rounded ml-2 hover:bg-gray-400 transition">Editar</button>
-          </td>
-        `;
+            <button id="edit-${i}" class="bg-gray-300 text-black px-3 py-1 rounded hover:bg-gray-400 transition">Editar</button>
+          </td>`;
         tbody.appendChild(tr);
 
-
-        document.getElementById(`btn-${i}`).addEventListener('click', () => {
-          const now = new Date(), today = now.toLocaleDateString('es-PE'), last = b.fechaEntrega ? new Date(b.fechaEntrega).toLocaleDateString('es-PE') : null;
+        // Botón Entregar
+        document.getElementById(`btn-${i}`).onclick = () => {
+          const now = new Date(), today = now.toLocaleDateString('es-PE');
+          const last = b.fechaEntrega ? new Date(b.fechaEntrega).toLocaleDateString('es-PE') : null;
           const doDeliver = () => {
-            b.status = 'Entregado'; b.fechaEntrega = now.toISOString(); b.count++;
+            b.status = 'Entregado'; b.fechaEntrega = now.toISOString(); b.count = (b.count || 0) + 1;
             saveData(); renderEntregas();
           };
           if (last === today) {
-            Swal.fire({ title: 'Entrega duplicada hoy', text: '¿Agregar de todas formas?', icon: 'warning', showCancelButton: true, confirmButtonText: 'Sí, agregar', cancelButtonText: 'No' })
+            Swal.fire({ title: 'Entrega duplicada hoy', text: '¿Agregar de todas formas?', icon: 'warning', showCancelButton: true, confirmButtonText: 'Sí', cancelButtonText: 'No' })
               .then(res => res.isConfirmed && doDeliver());
           } else doDeliver();
-        });
+        };
 
-
-        document.getElementById(`edit-${i}`).addEventListener('click', () => {
+        // Botón Editar
+        document.getElementById(`edit-${i}`).onclick = () => {
           Swal.fire({
             title: 'Corregir entrega',
-            html: `
-              <p class="mb-2">Beneficiario: ${b.name} (${b.dni})</p>
-              <input id="swal-name" class="swal2-input" placeholder="Tu nombre" />
-              <input id="swal-dni" class="swal2-input" placeholder="Tu DNI" />`,
-            focusConfirm: false,
-            showCancelButton: true,
+            html: `<p class="mb-2">Beneficiario: ${b.name} (${b.dni})</p><input id="swal-name" class="swal2-input" placeholder="Tu nombre"/><input id="swal-dni" class="swal2-input" placeholder="Tu DNI"/>`,
+            showCancelButton: true, focusConfirm: false,
             preConfirm: () => {
-              const userName = document.getElementById('swal-name').value;
-              const userDNI  = document.getElementById('swal-dni').value;
-              if (!userName || !userDNI) Swal.showValidationMessage('Nombre y DNI son obligatorios');
-              return { userName, userDNI };
+              const u = document.getElementById('swal-name').value;
+              const D = document.getElementById('swal-dni').value;
+              if (!u || !D) Swal.showValidationMessage('Nombre y DNI son obligatorios');
+              return { u, D };
             }
-          }).then(result => {
-            if (result.isConfirmed) {
-              if (b.count > 0) b.count--;
-              corrections.push({ beneficiario: b.dni, corregidoPor: result.value.userName, dniCorregidoPor: result.value.userDNI, fecha: new Date().toISOString() });
+          }).then(r => {
+            if (r.isConfirmed) {
+              if (b.count > 0) b.count--; 
+              corrections.push({ beneficiario: b.dni, corregidoPor: r.value.u, dniCorregidoPor: r.value.D, fecha: new Date().toISOString() });
               saveData(); renderEntregas();
               Swal.fire('Corregido', 'Se ha registrado la corrección y ajustado el contador.', 'success');
             }
           });
-        });
+        };
       });
     }
 
+    // Toggle sidebar móvil
+    const sb = document.getElementById('sidebar');
+    document.getElementById('btnSidebarOpen').onclick = () => sb.classList.remove('-translate-x-full');
+    document.getElementById('btnSidebarClose').onclick = () => sb.classList.add('-translate-x-full');
 
-    const sidebar = document.getElementById('sidebar');
-    document.getElementById('btnSidebarOpen').onclick = () => sidebar.classList.remove('-translate-x-full');
-    document.getElementById('btnSidebarClose').onclick = () => sidebar.classList.add('-translate-x-full');
-
-
-    showSection('dashboard');
-    saveData();
+    // Inicialización
+    renderEntregas();
   </script>
 </body>
 </html>
