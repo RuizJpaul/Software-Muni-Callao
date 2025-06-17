@@ -51,7 +51,7 @@
             <input id="filterComedor" type="text" placeholder="San Pedro" class="mt-1 block w-full p-2 border border-gray-300 rounded" />
           </div>
         </div>
-        <div class="overflow-x-auto overflow-y-auto max-h-96">
+        <div class="overflow-x-auto max-h-96 overflow-y-auto">
           <table class="min-w-full border-collapse">
             <thead class="bg-callaoBlue text-white">
               <tr>
@@ -77,8 +77,20 @@
   </div>
 
   <script>
-    function loadJSON(key) { try { const raw = localStorage.getItem(key); const p = JSON.parse(raw); return Array.isArray(p) ? p : []; } catch { return []; } }
-    function saveJSON(key, data) { try { localStorage.setItem(key, JSON.stringify(data)); } catch {} }
+    function loadJSON(key) {
+      try {
+        const raw = localStorage.getItem(key);
+        const parsed = JSON.parse(raw);
+        return Array.isArray(parsed) ? parsed : [];
+      } catch {
+        return [];
+      }
+    }
+    function saveJSON(key, data) {
+      try {
+        localStorage.setItem(key, JSON.stringify(data));
+      } catch {}
+    }
 
     let beneficiaries = loadJSON('beneficiarios');
     let history = loadJSON('deliveriesHistory');
@@ -86,16 +98,24 @@
 
     const debounce = (fn, d) => { let t; return (...a) => { clearTimeout(t); t = setTimeout(() => fn(...a), d); }; };
     const fmt = dt => ({ fecha: dt.toLocaleDateString('es-PE'), hora: dt.toLocaleTimeString('es-PE',{hour:'2-digit',minute:'2-digit'}) });
-    const filterList = l => l.filter(b => { const d = (b.numeroDocumento||b.dni||'').toLowerCase(); const n = ((b.nombres?b.nombres+' '+(b.apellidos||''):b.nombre)||'').toLowerCase(); const c = (b.comedor||'').toLowerCase(); return (!fDNI||d.includes(fDNI)) && (!fName||n.includes(fName)) && (!fCom||c.includes(fCom)); });
+    const filterList = l => l.filter(b => {
+      const d = (b.numeroDocumento||b.dni||'').toLowerCase();
+      const n = ((b.nombres?b.nombres+' '+(b.apellidos||''):b.nombre)||'').toLowerCase();
+      const c = (b.comedor||'').toLowerCase();
+      return (!fDNI||d.includes(fDNI)) && (!fName||n.includes(fName)) && (!fCom||c.includes(fCom));
+    });
 
     function render() {
       beneficiaries = loadJSON('beneficiarios');
       const tbody = document.getElementById('entregas-body'); tbody.innerHTML = '';
       const list = filterList(beneficiaries);
-      if (!list.length) { tbody.innerHTML = '<tr><td colspan="8" class="py-4 text-center text-gray-500">No hay beneficiarios</td></tr>'; return; }
+      if (!list.length) {
+        tbody.innerHTML = '<tr><td colspan="8" class="py-4 text-center text-gray-500">No hay beneficiarios</td></tr>';
+        return;
+      }
       list.forEach((b,i) => {
         const dni = b.numeroDocumento||b.dni;
-        const nombre = b.nombres?`${b.nombres} ${b.apellidos||''}`:b.nombre;
+        const nombre = b.nombres?`${b.nombres} ${b.apellidos||''}`.trim():b.nombre;
         const comedor = b.comedor;
         const tipo = b.mealType||'-';
         const cnt = typeof b.count==='number'?b.count:0;
@@ -114,10 +134,16 @@
             <button id="hist-${i}" class="bg-callaoPurple text-white px-3 py-1 rounded transition transform hover:scale-105 active:scale-95 cursor-pointer">Historial</button>
           </td>`;
         tbody.appendChild(tr);
-      }); attach();
+      });
+      attach();
     }
 
-    ['filterDni','filterName','filterComedor'].forEach(id => document.getElementById(id).addEventListener('input', debounce(e => { if(id==='filterDni') fDNI=e.target.value.trim().toLowerCase(); if(id==='filterName') fName=e.target.value.trim().toLowerCase(); if(id==='filterComedor') fCom=e.target.value.trim().toLowerCase(); render(); }, 300)));
+    ['filterDni','filterName','filterComedor'].forEach(id => document.getElementById(id).addEventListener('input', debounce(e => {
+      if (id==='filterDni') fDNI = e.target.value.trim().toLowerCase();
+      if (id==='filterName') fName = e.target.value.trim().toLowerCase();
+      if (id==='filterComedor') fCom = e.target.value.trim().toLowerCase();
+      render();
+    },300)));
 
     function attach() {
       beneficiaries.forEach((b,i) => {
@@ -129,18 +155,18 @@
     function deliver(b) {
       return () => {
         Swal.fire({
-          title: 'Tipo de comida',
+          title: 'Seleccione tipo de comida',
           input: 'select',
-          inputOptions: { Desayuno: 'Desayuno', Almuerzo: 'Almuerzo', Cena: 'Cena' },
+          inputOptions: {Desayuno:'Desayuno',Almuerzo:'Almuerzo',Cena:'Cena'},
           showCancelButton: true,
-          inputValidator: v => v ? null : 'Requerido'
-        }).then(r => {
-          if(r.isConfirmed) {
-            const now = new Date(); const {fecha,hora} = fmt(now);
-            b.mealType = r.value; b.fechaEntrega = now.toISOString(); b.count = (b.count||0)+1;
-            saveJSON('beneficiarios', beneficiaries);
-            history.push({ dni:b.numeroDocumento||b.dni, nombre:b.nombres?`${b.nombres} ${b.apellidos||''}`:b.nombre, tipo:r.value, fecha, hora, comedor:b.comedor });
-            saveJSON('deliveriesHistory', history);
+          inputValidator: v=>v?null:'Requerido'
+        }).then(r=>{
+          if(r.isConfirmed){
+            const now=new Date(); const{fecha,hora}=fmt(now);
+            b.mealType=r.value; b.fechaEntrega=now.toISOString(); b.count=(b.count||0)+1;
+            saveJSON('beneficiarios',beneficiaries);
+            history.push({dni:b.numeroDocumento||b.dni,nombre:b.nombres?`${b.nombres} ${b.apellidos||''}`:b.nombre,tipo:r.value,fecha,hora,comedor:b.comedor});
+            saveJSON('deliveriesHistory',history);
             render();
           }
         });
@@ -149,47 +175,93 @@
 
     function showHist(b) {
       return () => {
-        let his = loadJSON('deliveriesHistory').map((h,idx)=>({...h,idx})).filter(h=>h.dni === (b.numeroDocumento||b.dni));
-        if(!his.length) { Swal.fire('Sin historial','No hay registros','info'); return; }
-        const rows = his.map(h => `<tr class="border-b"><td class="py-1 px-2">${h.dni}</td><td class="py-1 px-2">${h.nombre}</td><td class="py-1 px-2">${h.tipo}</td><td class="py-1 px-2">${h.fecha}</td><td class="py-1 px-2">${h.hora}</td><td class="py-1 px-2">${h.comedor}</td><td class="py-1 px-2"><button data-idx="${h.idx}" class="del-btn bg-red-500 text-white px-2 py-1 rounded transition transform hover:scale-105 cursor-pointer">Eliminar</button></td></tr>`).join('');
-        const table = `<table class="min-w-full text-sm"><thead class="bg-callaoBlue text-white"><tr><th class="py-2 px-2">DNI</th><th class="py-2 px-2">Nombre</th><th class="py-2 px-2">Tipo</th><th class="py-2 px-2">Fecha</th><th class="py-2 px-2">Hora</th><th class="py-2 px-2">Comedor</th><th class="py-2 px-2">Acciones</th></tr></thead><tbody>${rows}</tbody></table>`;
+        let his = loadJSON('deliveriesHistory').map((h,idx)=>({...h,idx})).filter(h=>h.dni===(b.numeroDocumento||b.dni));
+        if(!his.length){ Swal.fire('Sin historial','No hay registros','info'); return; }
+        // build table
+        const rows = his.map(h=>
+          `<tr class="border-b">
+            <td class="py-1 px-2">${h.dni}</td>
+            <td class="py-1 px-2">${h.nombre}</td>
+            <td class="py-1 px-2">${h.tipo}</td>
+            <td class="py-1 px-2">${h.fecha}</td>
+            <td class="py-1 px-2">${h.hora}</td>
+            <td class="py-1 px-2">${h.comedor}</td>
+            <td class="py-1 px-2"><button data-idx="${h.idx}" class="del-btn bg-red-500 text-white px-2 py-1 rounded transition transform hover:scale-105 cursor-pointer">Eliminar</button></td>
+          </tr>`
+        ).join('');
+        const table =
+          `<table class="min-w-full text-sm">
+             <thead class="bg-callaoBlue text-white">
+               <tr>
+                 <th class="py-2 px-2">DNI</th>
+                 <th class="py-2 px-2">Nombre</th>
+                 <th class="py-2 px-2">Tipo</th>
+                 <th class="py-2 px-2">Fecha</th>
+                 <th class="py-2 px-2">Hora</th>
+                 <th class="py-2 px-2">Comedor</th>
+                 <th class="py-2 px-2">Acciones</th>
+               </tr>
+             </thead>
+             <tbody>${rows}</tbody>
+           </table>`;
         Swal.fire({
-          title: 'Historial',
-          html: `<div class="max-h-80 overflow-auto">${table}</div>`,
-          width: '80%', showCloseButton: true, showConfirmButton: false,
-          didOpen: () => {
-            const c = Swal.getHtmlContainer();
-            c.querySelectorAll('.del-btn').forEach(btn => btn.addEventListener('click', () => {
-              Swal.fire({
-                title: 'Confirmar eliminación',
-                html: '<input id="res-name" class="swal2-input" placeholder="Responsable (Nombre)"/><input id="res-dni" class="swal2-input" placeholder="Responsable (DNI)"/>',
-                showCancelButton: true,
-                preConfirm: () => {
-                  const n = document.getElementById('res-name').value;
-                  const d = document.getElementById('res-dni').value;
-                  if(!n || !d) Swal.showValidationMessage('Nombre y DNI requeridos');
-                  return { n, d };
-                }
-              }).then(r2 => {
-                if(r2.isConfirmed) {
-                  history = loadJSON('deliveriesHistory');
-                  history.splice(btn.dataset.idx, 1);
-                  saveJSON('deliveriesHistory', history);
-                  showHist(b)();
-                }
-              });
-            }));
+          title:'Historial',
+          html: `
+            <div class="mb-3">
+              <input id="hist-filter" type="text" placeholder="Buscar por fecha, hora o tipo..." class="w-full p-2 border border-gray-300 rounded text-sm" />
+            </div>
+            <div class="max-h-80 overflow-auto">
+              ${table}
+            </div>
+          `,
+          width:'80%', showCloseButton:true, showConfirmButton:false,
+          didOpen: ()=>{
+            const container = Swal.getHtmlContainer();
+            const input = container.querySelector('#hist-filter');
+            const tbody = container.querySelector('tbody');
+            let current = his.slice();
+            const update = list => {
+              tbody.innerHTML = list.map(h=>
+                `<tr class="border-b">
+                  <td class="py-1 px-2">${h.dni}</td>
+                  <td class="py-1 px-2">${h.nombre}</td>
+                  <td class="py-1 px-2">${h.tipo}</td>
+                  <td class="py-1 px-2">${h.fecha}</td>
+                  <td class="py-1 px-2">${h.hora}</td>
+                  <td class="py-1 px-2">${h.comedor}</td>
+                  <td class="py-1 px-2"><button data-idx="${h.idx}" class="del-btn bg-red-500 text-white px-2 py-1 rounded transition transform hover:scale-105 cursor-pointer">Eliminar</button></td>
+                </tr>`
+              ).join('');
+              attachDelete();
+            };
+            input.addEventListener('input', debounce(e=>{
+              const val=e.target.value.trim().toLowerCase();
+              update(current.filter(h=>h.fecha.includes(val)||h.hora.includes(val)||h.tipo.toLowerCase().includes(val)));
+            },300));
+            const attachDelete = ()=>{
+              container.querySelectorAll('.del-btn').forEach(btn=>btn.addEventListener('click',()=>{
+                Swal.fire({
+                  title:'Confirmar eliminación',
+                  html:'<input id="res-name" class="swal2-input" placeholder="Responsable (Nombre)"/><input id="res-dni" class="swal2-input" placeholder="Responsable (DNI)"/>',
+                  showCancelButton:true,
+                  preConfirm: ()=>{ const n=container.querySelector('#res-name').value; const d=container.querySelector('#res-dni').value; if(!n||!d) Swal.showValidationMessage('Requerido'); return {n,d}}                
+                }).then(r2=>{ if(r2.isConfirmed){ history.splice(btn.dataset.idx,1); saveJSON('deliveriesHistory',history); showHist(b)(); }});
+              }));
+            };
+            update(current);
           }
         });
       };
     }
 
     const sb = document.getElementById('sidebar');
-    document.getElementById('btnSidebarOpen').onclick = () => sb.classList.remove('-translate-x-full');
-    document.getElementById('btnSidebarClose').onclick = () => sb.classList.add('-translate-x-full');
+    document.getElementById('btnSidebarOpen').onclick = ()=> sb.classList.remove('-translate-x-full');
+    document.getElementById('btnSidebarClose').onclick= ()=> sb.classList.add('-translate-x-full');
 
     render();
   </script>
 </body>
 </html>
+
+
 
