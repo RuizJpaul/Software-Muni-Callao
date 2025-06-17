@@ -48,7 +48,7 @@ function createStore(initialStore = []) {
 }
 
 
-const comedorStore = createStore();
+const comedorStore = createStore(getPersistanceData());
 
 // Para crear una variable de manera global en todos mis archivos
 window.comedorStore = comedorStore;

@@ -88,7 +88,7 @@ function renderizarUI(state){
                 <img src="" alt="Comedor">
             </div>
             <p id="nombre-comedor${index}">Nombre: ${elmt.nombre}</p>
-            <p id="direccion-comedor${index}">Direccion: </p>
+            <p id="direccion-comedor${index}">Direccion: ${elmt.direccion}</p>
             <button id="boton-desplegarModalDos" onclick="verModalDos(${index}, ${elmt.nombre})">Ver</button>
         </div>
       `
@@ -106,4 +106,5 @@ function ocultarModalDos(){
 }
 
 window.comedorStore.suscribe(renderizarUI);
+window.comedorStore.suscribe(savePersistanceData);
 renderizarUI(window.comedorStore.getState())
