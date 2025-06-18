@@ -10,10 +10,10 @@ function createStore(initialStore = []) {
    }
 
    // Esta funcion se va encargar de manipular el nuevo estado
-   function setState(newState){
+   function setState(newState) {
       state = newState;
-      listeners.forEach(function (listener){
-        listener(state);
+      listeners.forEach(function (listener) {
+         listener(state);
       });
    }
 
@@ -23,20 +23,27 @@ function createStore(initialStore = []) {
       setState(newState)
    }
 
-   function clearStorage(){
+   function clearStorage() {
       setState([]);
    }
 
-   function suscribe(listener){
+   function suscribe(listener) {
       listeners.push(listener);
 
-      return ()=> {
+      return () => {
          const index = listeners.indexOf(listener);
-         if(index > -1){
-         listeners.splice(index,1);
+         if (index > -1) {
+            listeners.splice(index, 1);
          }
       }
    }
+
+   function deleteComedor(index) {
+      const newState = [...state];
+      newState.splice(index, 1);
+      setState(newState);
+   }
+
 
    return {
       getState,
@@ -44,11 +51,12 @@ function createStore(initialStore = []) {
       setState,
       suscribe,
       clearStorage,
+      deleteComedor
    }
 }
 
 
-const comedorStore = createStore();
+const comedorStore = createStore(getPersistanceData());
 
 // Para crear una variable de manera global en todos mis archivos
 window.comedorStore = comedorStore;
