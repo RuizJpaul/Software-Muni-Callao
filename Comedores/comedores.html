@@ -44,7 +44,7 @@
   </aside>
 
   <!-- Main content wrapper -->
-  <div class="flex-1 flex flex-col border border-green-700 w-[82%] h-full">
+  <div class="flex-1 flex flex-col w-[82%] h-full">
     <!-- Header -->
     <header class="w-[100%] h-[12%] bg-gradient-to-r from-pink-500 to-red-500 flex items-center px-6 shadow-md">
       <button id="btnSidebarOpen" class="lg:hidden mr-4 focus:outline-none text-2xl text-white">&#9776;</button>
@@ -52,12 +52,12 @@
     </header>
 
     <!-- Main area -->
-    <main class="flex-1 p-6 w-[100%] h-[78%] border border-black">
+    <main class="flex-1 p-6 w-[100%] h-[78%] bg-white">
       <!-- Comedores -->
       <section id="recuadro-comedores">
         <div id="recuadro-uno">
           <button id="boton-desplegarModalUno">Agregar Comedor</button>
-          <input type="text">
+          <input type="text" placeholder=" Buscar...">
         </div>
         <div id="recuadro-dos">
           <!-- Cards comedores -->
@@ -69,7 +69,7 @@
       <section class="recuadro-modales">
         <div id="modal-uno">
           <div class="encabezado-form">
-            <p>Nuevo Comedor</p>
+            <p id="titulo-uno">Nuevo Comedor</p>
             <button id="boton-cerrar-uno"><img src="./../Images/close-svgrepo-com.svg" alt="Cerrar"></button>
           </div>
           <form action="" class="form-modal">
@@ -97,7 +97,7 @@
                 <input type="text" id="inputTelefono">
               </div>
             </div>
-            <div id="cuerpo4-form">
+            <div id="cuerpo4-form-uno">
               <button id="boton-agregar">Agregar</button>              
             </div>
           </form>
@@ -106,46 +106,49 @@
         <!-- Modal dos -->
         <div class="modal-dos">
           <div class="encabezado-form">
-            <p>Comedor</p>
+            <p id="titulo-dos">Comedor N001 Municipalidad Provincial del callao</p>
             <button id="boton-cerrar-dos"><img src="./../Images/close-svgrepo-com.svg" alt="Cerrar" onclick="ocultarModalDos()"></button>
           </div>
           <form action="" class="form-modal">
             <div class="cuerpo1-form">
               <div>
                 <p>Nombre</p>
-                <input type="text">
+                <input type="text" id="inputNombre2">
               </div>
               <div>
                 <p>Cantidad</p>
-                <input type="text">
+                <input type="text" id="inputCantidad2">
               </div>
             </div>
             <div class="cuerpo2-form">
               <p>Direccion</p>
-              <input type="text">
+              <input type="text" id="inputDireccion2">
             </div>
             <div class="cuerpo3-form">
               <div>
                 <p>Responsable</p>
-                <input type="text">
+                <input type="text" id="inputResponsable2">
               </div>
               <div>
                 <p>Telefono</p>
-                <input type="text">
+                <input type="text" id="inputTelefono2">
               </div>
             </div>
-            <div id="cuerpo4-form-uno">
-              <div>
-                <p>Panel de control</p>
-              </div>
-              <div>
-                <div>
+            <div id="cuerpo4-form-dos">
+              <div class="detalle-cuerpo4">
+                <div class="detalle-botones4">
                   <button>Editar</button>   
                   <button>Cambiar Imagen</button>           
                 </div>
-                <div>
-                  <p>Estado</p>
-                  <div></div>
+                <div class="detalle-estado4">
+                  <div class="contenedor-switch">
+                    <label class="switch">
+                      <input type="checkbox" id="toggleSwitch">
+                      <span class="slider"></span>
+                      <div class="label-text">
+                      </div>
+                    </label>
+                  </div>
                 </div>
               </div>
             </div>

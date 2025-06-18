@@ -23,6 +23,10 @@ function createStore(initialStore = []) {
       setState(newState)
    }
 
+   function getComedorByName(nombre) {
+      return state.find((c) => c.nombre == nombre);
+   }
+
    function clearStorage() {
       setState([]);
    }
@@ -49,6 +53,7 @@ function createStore(initialStore = []) {
       getState,
       addComedor,
       setState,
+      getComedorByName,
       suscribe,
       clearStorage,
       deleteComedor

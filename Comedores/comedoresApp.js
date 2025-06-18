@@ -89,7 +89,7 @@ function renderizarUI(state) {
             </div>
             <p id="nombre-comedor${index}">Nombre: ${elmt.nombre}</p>
             <p id="direccion-comedor${index}">Direccion: ${elmt.direccion}</p>
-            <button id="boton-desplegarModalDos" onclick="verModalDos(${index}, ${elmt.nombre})">Ver</button>
+            <button id="boton-desplegarModalDos" onclick="verModalDos(${index}, '${elmt.nombre}')">Ver</button>
             <button onclick="eliminarComedor(${index})">Eliminar</button>
         </div>
       `
@@ -98,6 +98,12 @@ function renderizarUI(state) {
 
 function verModalDos(index, nombre) {
     estado = !estado;
+    const comedor = comedorStore.getComedorByName(nombre);
+    document.querySelector("#inputNombre2").value = comedor.nombre;
+    document.querySelector("#inputDireccion2").value = comedor.direccion;
+    document.querySelector("#inputCantidad2").value = comedor.capacidad;
+    document.querySelector("#inputResponsable2").value = comedor.responsable;
+    document.querySelector("#inputTelefono2").value = comedor.telefono;
     cambiarEstado(".modal-dos");
 }
 
