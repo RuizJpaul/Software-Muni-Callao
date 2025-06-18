@@ -54,7 +54,8 @@
       <section id="recuadro-comedores">
         <div id="recuadro-uno">
           <button id="boton-desplegarModalUno">Agregar Comedor</button>
-          <input type="text" placeholder=" Buscar...">
+          <input type="text" placeholder="Buscar comedor..." id="barraBuscador"
+          class="border border-gray-300 rounded-lg px-4 py-2 w-full max-w-xs focus:outline-none focus:ring-2 focus:ring-callaoBlue">
         </div>
         <div id="recuadro-dos">
           <!-- Cards comedores -->
@@ -103,7 +104,7 @@
         <!-- Modal dos -->
         <div class="modal-dos">
           <div class="encabezado-form">
-            <p id="titulo-dos">Comedor N001 Municipalidad Provincial del callao</p>
+            <p id="titulo-dos"></p>
             <button id="boton-cerrar-dos"><img src="./../Images/close-svgrepo-com.svg" alt="Cerrar" onclick="ocultarModalDos()"></button>
           </div>
           <form action="" class="form-modal">
@@ -134,16 +135,15 @@
             <div id="cuerpo4-form-dos">
               <div class="detalle-cuerpo4">
                 <div class="detalle-botones4">
-                  <button>Editar</button>   
-                  <button>Cambiar Imagen</button>           
+                  <button id="boton-guardar2">Guardar cambios</button>   
+                  <button>Cambiar Imagen</button>      
                 </div>
                 <div class="detalle-estado4">
                   <div class="contenedor-switch">
                     <label class="switch">
                       <input type="checkbox" id="toggleSwitch">
                       <span class="slider"></span>
-                      <div class="label-text">
-                      </div>
+                      <div class="label-text" id="labelText">Inactivo</div>
                     </label>
                   </div>
                 </div>

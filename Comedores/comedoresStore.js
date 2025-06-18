@@ -42,6 +42,13 @@ function createStore(initialStore = []) {
       }
    }
 
+   function updateComedor(index, nuevosDatos) {
+      const newState = [...state];
+      newState[index] = { ...newState[index], ...nuevosDatos };
+      setState(newState);
+   }
+
+
    function deleteComedor(index) {
       const newState = [...state];
       newState.splice(index, 1);
@@ -56,7 +63,8 @@ function createStore(initialStore = []) {
       getComedorByName,
       suscribe,
       clearStorage,
-      deleteComedor
+      deleteComedor,
+      updateComedor,
    }
 }
 
