@@ -14,9 +14,17 @@
 
 #recuadro-uno button{
     padding: 0% 2% 0% 2%;
-    border-radius: 1rem;
-    background-color: blue;
+    border-radius: 0.5rem;
+    background-color: #D4AF37;
     color: white;
+}
+
+#recuadro-uno input{
+    background-color: whitesmoke;
+}
+
+#recuadro-uno input:hover{
+    background-color: #F5F5F5;
 }
 
 #recuadro-dos{
@@ -42,7 +50,6 @@
 }
 
 .recuadro-imagen-comedor{
-    border: solid 1px black;
     width: 100%;
     height: 50%;
 }
@@ -52,8 +59,14 @@
 }
 
 .recuadro-comedor p{
-    font-size: 13px;
+    text-align: center;
+    font-size: 15px;
     width: 100%;
+}
+
+.recuadro-comedor button{
+    color: #1A659E;
+    font-size: 13px;
 }
 
 .recuadro-comedor button:hover{
@@ -80,7 +93,7 @@
     width: 50%;
     height: 80%;
     padding: 2% 4% 2% 4%;
-    background-color: gainsboro;
+    background-color: #88C9FF;
     border-radius: 1rem;
     display: flex;
     flex-direction: column;
@@ -91,31 +104,21 @@
     width: 50%;
     height: 80%;
     padding: 2% 4% 2% 4%;
-    background-color: gainsboro;
+    background-color: lightgray;
     border-radius: 1rem;
     display: flex;
     flex-direction: column;
     display: none;
 }
 
-.form-modal{
-    width: 100%;
-    height: 80%;
-    padding: 3rem 1.5rem 3rem 1.5rem;
-    display: flex;
-    flex-direction: column;
-    justify-content: start;
-    gap: 2rem;
-}
-
 .encabezado-form{
     width: 100%;
-    height: 10%;
+    height: 15%;
     display: flex;
     justify-content: space-between;
     align-items: center;
 }
-.encabezado-form p{
+#titulo-uno{
     font-size: 3rem;
 }
 
@@ -127,17 +130,34 @@
     width: 100%;
 }
 
+.form-modal{
+    width: 100%;
+    height: 80%;
+    padding: 1rem 1.5rem 0 1.5rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    gap: 1rem;
+}
+
 .form-modal p{
-    font-size: 1.2rem;
+    font-size: 1rem;
+}
+
+.form-modal input{
+    border-radius: 10px;
 }
 
 .cuerpo1-form{
+    width: 100%;
+    height: 20%;
     display: flex;   
     justify-content: space-between;
 }
 
 .cuerpo2-form{
     width: 100%;
+    height: 20%;
 }
 
 .cuerpo2-form input{
@@ -145,20 +165,122 @@
 }
 
 .cuerpo3-form{
+    width: 100%;
+    height: 20%;
     display: flex;   
     justify-content: space-between;
 }
 
 #cuerpo4-form-uno{
+    width: 100%;
+    height: 15%;
     display: flex;
     justify-content: center;
-    padding: 1rem;
 }
 
-#cuerpo4-form-uno button{
+#boton-agregar{
+    padding: 0% 4% 0% 4%;
+    border-radius: 0.5rem;
+    background-color: #28A745;
+}
+
+#titulo-dos{
+    font-size: 20px;
+}
+
+#cuerpo4-form-dos{
+    width: 100%;
+    height: 40%;
+    display: flex;
+    flex-direction: column;
+    padding: 1rem 0 1rem 0;
+}
+.detalle-cuerpo4{
+    width: 100%;
+    height: 100%;
+    display: flex;
+    justify-content: space-between;
+}
+
+.detalle-botones4{
+    width: 40%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+}
+
+.detalle-estado4{
+    width: 35%;
+    height: 100%;
+}
+
+.detalle-botones4 button{
     color: white;
     padding: 2% 3% 2% 3%;
     background-color: black;
     border-radius: 1rem;
     font-size: 1rem;
+}
+
+
+/* Contenedor Switch */
+.contenedor-switch{
+    display: flex;
+    justify-content: center;
+}
+
+.switch {
+    position: relative;
+    display: inline-block;
+    width: 100px;
+    height: 50px;
+}
+
+.switch input {
+    opacity: 0;
+    width: 0;
+    height: 0;
+}
+
+.slider {
+    position: absolute;
+    cursor: pointer;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: #fa7d85;
+    transition: .4s;
+    border-radius: 34px;
+}
+
+.slider:before {
+    position: absolute;
+    content: "";
+    height: 42px;
+    width: 42px;
+    left: 4px;
+    bottom: 4px;
+    background-color: white;
+    transition: .4s;
+    border-radius: 50%;
+}
+
+input:checked + .slider {
+    background-color: #7dfa9e;
+}
+
+input:checked + .slider:before {
+    transform: translateX(50px);
+}
+
+.label-text {
+    position: absolute;
+    width: 100%;
+    text-align: center;
+    line-height: 50px;
+    font-weight: bold;
+    color: white;
+    pointer-events: none;
 }
