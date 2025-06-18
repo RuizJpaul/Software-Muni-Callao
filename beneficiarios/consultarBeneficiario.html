@@ -46,10 +46,11 @@
 
  <main class="flex-1 overflow-y-auto p-6">
 
-  <div class="w-full px-4 sm:px-8">
+  <div class="w-full px-4 sm:px-6 lg:px-8 max-w-full">
     <h1 class="text-3xl font-bold mb-4">Consultar Beneficiario</h1>
 
-    <div class="flex flex-col md:flex-row md:space-x-4 mb-6">
+    <div class="flex flex-col space-y-2 md:flex-row md:space-y-0 md:space-x-4 mb-6">
+
       <input id="buscarInput" type="text" placeholder="Buscar por nombre o DNI" class="w-full md:w-1/2 p-2 border rounded mb-2 md:mb-0">
 
       <select id="filtroComedor" class="w-full md:w-1/4 p-2 border rounded">
@@ -65,25 +66,26 @@
       </select>
     </div>
 
-    <div class="overflow-x-auto">
-      <table class="min-w-full bg-white shadow-md rounded overflow-hidden">
-        <thead class="bg-gray-200">
+    <div class="w-full overflow-x-auto scrollbar-thin scrollbar-thumb-gray-300 scrollbar-track-transparent">
+  <table class=" w-full bg-white shadow-md rounded overflow-hidden text-sm">
+        <thead class="bg-gray-200 text-sm">
           <tr>
-            <th class="p-2 text-left">Tipo Doc</th>
-            <th class="p-2 text-left">N° Documento</th>
-            <th class="p-2 text-left">Nombres</th>
-            <th class="p-2 text-left">Apellidos</th>
-            <th class="p-2 text-left">F. Nacimiento</th>
-            <th class="p-2 text-left">Edad</th>
-            <th class="p-2 text-left">Sexo</th>
-            <th class="p-2 text-left">Dirección</th>
-            <th class="p-2 text-left">Teléfono</th>
-            <th class="p-2 text-left">Estado Civil</th>
-            <th class="p-2 text-left">N° Hijos</th>
-            <th class="p-2 text-left">Condición</th>
-            <th class="p-2 text-left">Comedor</th>
-            <th class="p-2 text-left">Estado</th>
-            <th class="p-2 text-left">Acciones</th>
+    <th class="p-2 text-left">Tipo Doc</th>
+    <th class="p-2 text-left">N° Documento</th>
+    <th class="p-2 text-left">Nombres</th>
+    <th class="p-2 text-left">Apellidos</th>
+    <th class="p-2 text-left hidden md:table-cell">F. Nacimiento</th>
+    <th class="p-2 text-left hidden md:table-cell">Edad</th>
+    <th class="p-2 text-left hidden md:table-cell">Sexo</th>
+    <th class="p-2 text-left hidden lg:table-cell">Dirección</th>
+    <th class="p-2 text-left hidden lg:table-cell">Teléfono</th>
+    <th class="p-2 text-left hidden lg:table-cell">Estado Civil</th>
+    <th class="p-2 text-left hidden lg:table-cell">N° Hijos</th>
+    <th class="p-2 text-left hidden lg:table-cell">Condición</th>
+    <th class="p-2 text-left hidden md:table-cell">Comedor</th>
+    <th class="p-2 text-left hidden md:table-cell">Estado</th>
+    <th class="p-2 text-left">Acciones</th>
+
           </tr>
         </thead>
         <tbody id="tablaBeneficiarios"></tbody>
