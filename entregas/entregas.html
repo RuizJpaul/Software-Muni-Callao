@@ -10,7 +10,18 @@
   <!-- SweetAlert2 -->
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
   <script>
-    tailwind.config = { theme: { extend: { colors: { callaoBlue: '#0057B7', callaoYellow: '#FFC20E', callaoPurple: '#6B21A8' } } } };
+    // Paleta de colores Callao
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            callaoBlue: '#0057B7',
+            callaoYellow: '#FFC20E',
+            callaoPurple: '#6B21A8'
+          }
+        }
+      }
+    };
   </script>
 </head>
 <body class="flex h-screen bg-gradient-to-r from-blue-50 to-purple-50">
@@ -21,247 +32,322 @@
       <button id="btnSidebarClose" class="lg:hidden text-2xl">&times;</button>
     </div>
     <nav class="p-4 space-y-1">
-      <a href="Index_Principal.html" class="flex items-center px-3 py-2 rounded-lg hover:bg-purple-700 transition transform hover:scale-105 cursor-pointer">🏠<span class="ml-2">Dashboard</span></a>
-      <a href="Comedores/comedores.html" class="flex items-center px-3 py-2 rounded-lg hover:bg-purple-700 transition transform hover:scale-105 cursor-pointer">🏛️<span class="ml-2">Comedores</span></a>
-      <a href="beneficiarios/beneficiarios.html" class="flex items-center px-3 py-2 rounded-lg hover:bg-purple-700 transition transform hover:scale-105 cursor-pointer">👥<span class="ml-2">Beneficiarios</span></a>
-      <a href="entregas/entregas.html" class="flex items-center px-3 py-2 rounded-lg bg-purple-800/50 transition transform hover:scale-105 cursor-pointer">🍽️<span class="ml-2">Entregas</span></a>
+      <a href="Index_Principal.html" class="flex items-center px-3 py-2 rounded-lg hover:bg-purple-700 transition">🏠<span class="ml-2">Dashboard</span></a>
+      <a href="Comedores/comedores.html" class="flex items-center px-3 py-2 rounded-lg hover:bg-purple-700 transition">🏛️<span class="ml-2">Comedores</span></a>
+      <a href="beneficiarios/beneficiarios.html" class="flex items-center px-3 py-2 rounded-lg hover:bg-purple-700 transition">👥<span class="ml-2">Beneficiarios</span></a>
+      <a href="entregas/entregas.html" class="flex items-center px-3 py-2 rounded-lg bg-purple-800/50 transition">🍽️<span class="ml-2">Entregas</span></a>
     </nav>
   </aside>
 
+  <!-- Main content -->
   <div class="flex-1 flex flex-col ml-60">
+    <!-- Header -->
     <header class="h-16 bg-gradient-to-r from-pink-500 to-red-500 flex items-center px-6 shadow-md">
-      <button id="btnSidebarOpen" class="lg:hidden mr-4 text-2xl text-white cursor-pointer">&#9776;</button>
+      <button id="btnSidebarOpen" class="lg:hidden mr-4 text-2xl text-white">&#9776;</button>
       <h1 class="text-2xl font-bold text-white">Registro de Entregas</h1>
     </header>
 
+    <!-- Body -->
     <main class="flex-1 overflow-y-auto p-6">
-      <div class="bg-white p-6 rounded-lg shadow-lg">
-        <!-- Filtros -->
-        <div class="mb-4 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
-          <div>
-            <label for="filterDni" class="block text-sm font-medium text-gray-700">Filtrar por DNI</label>
-            <input id="filterDni" type="text" placeholder="12345678" class="mt-1 block w-full p-2 border border-gray-300 rounded" />
-          </div>
-          <div>
-            <label for="filterName" class="block text-sm font-medium text-gray-700">Filtrar por Nombre</label>
-            <input id="filterName" type="text" placeholder="Ana Torres" class="mt-1 block w-full p-2 border border-gray-300 rounded" />
-          </div>
-          <div>
-            <label for="filterComedor" class="block text-sm font-medium text-gray-700">Filtrar por Comedor</label>
-            <input id="filterComedor" type="text" placeholder="San Pedro" class="mt-1 block w-full p-2 border border-gray-300 rounded" />
-          </div>
+      <!-- Filtros -->
+      <div class="bg-white p-6 rounded-lg shadow mb-6 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4">
+        <div>
+          <label for="filterDni" class="block text-gray-700">Filtrar por DNI</label>
+          <input id="filterDni" class="mt-1 w-full p-2 border rounded" placeholder="12345678" />
         </div>
-        <div class="overflow-x-auto max-h-96 overflow-y-auto">
-          <table class="min-w-full border-collapse">
-            <thead class="bg-callaoBlue text-white">
-              <tr>
-                <th class="py-2 px-4 text-left">DNI</th>
-                <th class="py-2 px-4 text-left">Nombre</th>
-                <th class="py-2 px-4 text-left">Comedor</th>
-                <th class="py-2 px-4 text-left">Tipo</th>
-                <th class="py-2 px-4 text-left">Fecha</th>
-                <th class="py-2 px-4 text-left">Hora</th>
-                <th class="py-2 px-4 text-left">Veces</th>
-                <th class="py-2 px-4 text-left">Acciones</th>
-              </tr>
-            </thead>
-            <tbody id="entregas-body" class="divide-y"></tbody>
-          </table>
+        <div>
+          <label for="filterName" class="block text-gray-700">Filtrar por Nombre</label>
+          <input id="filterName" class="mt-1 w-full p-2 border rounded" placeholder="Ana Torres" />
         </div>
+        <div>
+          <label for="filterComedor" class="block text-gray-700">Filtrar por Comedor</label>
+          <input id="filterComedor" class="mt-1 w-full p-2 border rounded" placeholder="San Pedro" />
+        </div>
+      </div>
+
+      <!-- Tabla de entregas -->
+      <div class="bg-white p-6 rounded-lg shadow overflow-auto max-h-96">
+        <table class="min-w-full border-collapse">
+          <thead class="bg-callaoBlue text-white">
+            <tr>
+              <th class="py-2 px-4 text-left">DNI</th>
+              <th class="py-2 px-4 text-left">Nombre</th>
+              <th class="py-2 px-4 text-left">Comedor</th>
+              <th class="py-2 px-4 text-left">Tipo</th>
+              <th class="py-2 px-4 text-left">Fecha</th>
+              <th class="py-2 px-4 text-left">Hora</th>
+              <th class="py-2 px-4 text-left">Veces</th>
+              <th class="py-2 px-4 text-left">Acciones</th>
+            </tr>
+          </thead>
+          <tbody id="entregas-body" class="divide-y"></tbody>
+        </table>
       </div>
     </main>
 
+    <!-- Footer -->
     <footer class="h-12 bg-gradient-to-r from-callaoBlue to-indigo-700 flex items-center justify-center text-white">
       <span class="text-sm">v1.0 • Municipalidad Provincial del Callao</span>
     </footer>
   </div>
 
   <script>
+    // Funciones de carga y guarda
     function loadJSON(key) {
       try {
-        const raw = localStorage.getItem(key);
-        const parsed = JSON.parse(raw);
-        return Array.isArray(parsed) ? parsed : [];
+        const data = JSON.parse(localStorage.getItem(key));
+        return Array.isArray(data) ? data : [];
       } catch {
         return [];
       }
     }
-    function saveJSON(key, data) {
-      try {
-        localStorage.setItem(key, JSON.stringify(data));
-      } catch {}
+    function saveJSON(key, val) {
+      localStorage.setItem(key, JSON.stringify(val));
     }
 
+    // Datos iniciales
     let beneficiaries = loadJSON('beneficiarios');
     let history = loadJSON('deliveriesHistory');
     let fDNI = '', fName = '', fCom = '';
 
-    const debounce = (fn, d) => { let t; return (...a) => { clearTimeout(t); t = setTimeout(() => fn(...a), d); }; };
-    const fmt = dt => ({ fecha: dt.toLocaleDateString('es-PE'), hora: dt.toLocaleTimeString('es-PE',{hour:'2-digit',minute:'2-digit'}) });
-    const filterList = l => l.filter(b => {
-      const d = (b.numeroDocumento||b.dni||'').toLowerCase();
-      const n = ((b.nombres?b.nombres+' '+(b.apellidos||''):b.nombre)||'').toLowerCase();
-      const c = (b.comedor||'').toLowerCase();
-      return (!fDNI||d.includes(fDNI)) && (!fName||n.includes(fName)) && (!fCom||c.includes(fCom));
+    // Debounce
+    const debounce = (fn, d) => {
+      let t;
+      return (...args) => {
+        clearTimeout(t);
+        t = setTimeout(() => fn(...args), d);
+      };
+    };
+
+    // Formato fecha/hora
+    const fmt = dt => ({
+      fecha: dt.toLocaleDateString('es-PE'),
+      hora: dt.toLocaleTimeString('es-PE', { hour: '2-digit', minute: '2-digit' })
     });
 
+    // Filtrar beneficiarios
+    function filterList(list) {
+      return list.filter(b => {
+        const d = (b.numeroDocumento||b.dni||'').toLowerCase();
+        const n = ((b.nombres? b.nombres+' '+(b.apellidos||''):b.nombre)||'').toLowerCase();
+        const c = (b.comedor||'').toLowerCase();
+        return (!fDNI   || d.includes(fDNI))
+            && (!fName  || n.includes(fName))
+            && (!fCom   || c.includes(fCom));
+      });
+    }
+
+    // Render de la tabla principal
     function render() {
       beneficiaries = loadJSON('beneficiarios');
-      const tbody = document.getElementById('entregas-body'); tbody.innerHTML = '';
+      history = loadJSON('deliveriesHistory');
+      const tbody = document.getElementById('entregas-body');
+      tbody.innerHTML = '';
+
       const list = filterList(beneficiaries);
       if (!list.length) {
         tbody.innerHTML = '<tr><td colspan="8" class="py-4 text-center text-gray-500">No hay beneficiarios</td></tr>';
         return;
       }
-      list.forEach((b,i) => {
-        const dni = b.numeroDocumento||b.dni;
-        const nombre = b.nombres?`${b.nombres} ${b.apellidos||''}`.trim():b.nombre;
-        const comedor = b.comedor;
-        const tipo = b.mealType||'-';
-        const cnt = typeof b.count==='number'?b.count:0;
-        const {fecha,hora} = b.fechaEntrega?fmt(new Date(b.fechaEntrega)):{fecha:'',hora:''};
-        const tr = document.createElement('tr'); tr.className = 'border-b';
+
+      list.forEach((b, i) => {
+        const dni  = b.numeroDocumento||b.dni;
+        const nombre = b.nombres ? `${b.nombres} ${b.apellidos||''}`.trim() : b.nombre;
+        const comedor= b.comedor;
+        const tipo   = b.mealType || '-';
+        const cnt    = history.filter(h => h.dni===dni).length;
+        const dt     = b.fechaEntrega ? fmt(new Date(b.fechaEntrega)) : {fecha:'', hora:''};
+
+        const tr = document.createElement('tr');
+        tr.className = 'border-b';
         tr.innerHTML = `
           <td class="py-2 px-4">${dni}</td>
           <td class="py-2 px-4">${nombre}</td>
           <td class="py-2 px-4">${comedor}</td>
           <td class="py-2 px-4">${tipo}</td>
-          <td class="py-2 px-4">${fecha}</td>
-          <td class="py-2 px-4">${hora}</td>
+          <td class="py-2 px-4">${dt.fecha}</td>
+          <td class="py-2 px-4">${dt.hora}</td>
           <td class="py-2 px-4">${cnt}</td>
           <td class="py-2 px-4 flex space-x-2">
-            <button id="btn-${i}" class="bg-callaoYellow text-white px-3 py-1 rounded transition transform hover:scale-105 active:scale-95 cursor-pointer">Entregar</button>
-            <button id="hist-${i}" class="bg-callaoPurple text-white px-3 py-1 rounded transition transform hover:scale-105 active:scale-95 cursor-pointer">Historial</button>
+            <button id="btn-${i}"  class="bg-callaoYellow text-white px-3 py-1 rounded hover:scale-105 cursor-pointer">Entregar</button>
+            <button id="hist-${i}" class="bg-callaoPurple text-white px-3 py-1 rounded hover:scale-105 cursor-pointer">Historial</button>
           </td>`;
         tbody.appendChild(tr);
       });
-      attach();
+
+      attachHandlers();
     }
 
-    ['filterDni','filterName','filterComedor'].forEach(id => document.getElementById(id).addEventListener('input', debounce(e => {
-      if (id==='filterDni') fDNI = e.target.value.trim().toLowerCase();
-      if (id==='filterName') fName = e.target.value.trim().toLowerCase();
-      if (id==='filterComedor') fCom = e.target.value.trim().toLowerCase();
-      render();
-    },300)));
+    // Listeners filtros
+    ['filterDni','filterName','filterComedor'].forEach(id => {
+      document.getElementById(id).addEventListener('input', debounce(e => {
+        if (id==='filterDni')    fDNI  = e.target.value.toLowerCase();
+        if (id==='filterName')   fName = e.target.value.toLowerCase();
+        if (id==='filterComedor')fCom  = e.target.value.toLowerCase();
+        render();
+      }, 300));
+    });
 
-    function attach() {
-      beneficiaries.forEach((b,i) => {
-        document.getElementById(`btn-${i}`).onclick = deliver(b);
-        document.getElementById(`hist-${i}`).onclick = showHist(b);
+    // Adjuntar botones
+    function attachHandlers() {
+      beneficiaries.forEach((b, i) => {
+        document.getElementById(`btn-${i}`).onclick  = entregarHandler(b);
+        document.getElementById(`hist-${i}`).onclick = historialHandler(b);
       });
     }
 
-    function deliver(b) {
+    // Entregar
+    function entregarHandler(b) {
       return () => {
         Swal.fire({
           title: 'Seleccione tipo de comida',
           input: 'select',
           inputOptions: {Desayuno:'Desayuno',Almuerzo:'Almuerzo',Cena:'Cena'},
-          showCancelButton: true,
-          inputValidator: v=>v?null:'Requerido'
-        }).then(r=>{
-          if(r.isConfirmed){
-            const now=new Date(); const{fecha,hora}=fmt(now);
-            b.mealType=r.value; b.fechaEntrega=now.toISOString(); b.count=(b.count||0)+1;
-            saveJSON('beneficiarios',beneficiaries);
-            history.push({dni:b.numeroDocumento||b.dni,nombre:b.nombres?`${b.nombres} ${b.apellidos||''}`:b.nombre,tipo:r.value,fecha,hora,comedor:b.comedor});
-            saveJSON('deliveriesHistory',history);
+          showCancelButton: true
+        }).then(r => {
+          if (r.isConfirmed) {
+            const now = new Date(), dt = fmt(now);
+            b.mealType     = r.value;
+            b.fechaEntrega = now.toISOString();
+            saveJSON('beneficiarios', beneficiaries);
+            history.push({
+              dni: b.numeroDocumento||b.dni,
+              nombre: b.nombres?`${b.nombres} ${b.apellidos||''}`:b.nombre,
+              tipo: r.value,
+              fecha: dt.fecha,
+              hora: dt.hora,
+              comedor: b.comedor
+            });
+            saveJSON('deliveriesHistory', history);
             render();
           }
         });
       };
     }
 
-    function showHist(b) {
+    // Historial
+    function historialHandler(b) {
       return () => {
-        let his = loadJSON('deliveriesHistory').map((h,idx)=>({...h,idx})).filter(h=>h.dni===(b.numeroDocumento||b.dni));
-        if(!his.length){ Swal.fire('Sin historial','No hay registros','info'); return; }
-        // build table
-        const rows = his.map(h=>
-          `<tr class="border-b">
+        history = loadJSON('deliveriesHistory');
+        const his = history
+          .map((h,idx)=>({...h,idx}))
+          .filter(h=>h.dni===(b.numeroDocumento||b.dni));
+
+        if (!his.length) {
+          Swal.fire('Sin historial','No hay registros','info');
+          return;
+        }
+
+        const buildRows = list => list.map(h => `
+          <tr class="border-b">
             <td class="py-1 px-2">${h.dni}</td>
             <td class="py-1 px-2">${h.nombre}</td>
             <td class="py-1 px-2">${h.tipo}</td>
             <td class="py-1 px-2">${h.fecha}</td>
             <td class="py-1 px-2">${h.hora}</td>
             <td class="py-1 px-2">${h.comedor}</td>
-            <td class="py-1 px-2"><button data-idx="${h.idx}" class="del-btn bg-red-500 text-white px-2 py-1 rounded transition transform hover:scale-105 cursor-pointer">Eliminar</button></td>
-          </tr>`
-        ).join('');
-        const table =
-          `<table class="min-w-full text-sm">
-             <thead class="bg-callaoBlue text-white">
-               <tr>
-                 <th class="py-2 px-2">DNI</th>
-                 <th class="py-2 px-2">Nombre</th>
-                 <th class="py-2 px-2">Tipo</th>
-                 <th class="py-2 px-2">Fecha</th>
-                 <th class="py-2 px-2">Hora</th>
-                 <th class="py-2 px-2">Comedor</th>
-                 <th class="py-2 px-2">Acciones</th>
-               </tr>
-             </thead>
-             <tbody>${rows}</tbody>
-           </table>`;
+            <td class="py-1 px-2">
+              <button data-idx="${h.idx}" class="del-btn bg-red-500 text-white px-2 py-1 rounded hover:scale-105 cursor-pointer">Eliminar</button>
+            </td>
+          </tr>`).join('');
+
         Swal.fire({
-          title:'Historial',
+          title: 'Historial',
           html: `
             <div class="mb-3">
-              <input id="hist-filter" type="text" placeholder="Buscar por fecha, hora o tipo..." class="w-full p-2 border border-gray-300 rounded text-sm" />
+              <input id="hist-filter" class="w-full p-2 border rounded" placeholder="Buscar fecha, hora o tipo..." />
             </div>
             <div class="max-h-80 overflow-auto">
-              ${table}
+              <table class="min-w-full text-sm">
+                <thead class="bg-callaoBlue text-white">
+                  <tr>
+                    <th class="py-2 px-2">DNI</th>
+                    <th class="py-2 px-2">Nombre</th>
+                    <th class="py-2 px-2">Tipo</th>
+                    <th class="py-2 px-2">Fecha</th>
+                    <th class="py-2 px-2">Hora</th>
+                    <th class="py-2 px-2">Comedor</th>
+                    <th class="py-2 px-2">Acciones</th>
+                  </tr>
+                </thead>
+                <tbody id="hist-body">${buildRows(his)}</tbody>
+              </table>
             </div>
           `,
-          width:'80%', showCloseButton:true, showConfirmButton:false,
-          didOpen: ()=>{
+          width: '80%',
+          showCloseButton: true,
+          showConfirmButton: false,
+          didOpen: () => {
             const container = Swal.getHtmlContainer();
-            const input = container.querySelector('#hist-filter');
-            const tbody = container.querySelector('tbody');
-            let current = his.slice();
+            const input     = container.querySelector('#hist-filter');
+            const tbodyHist = container.querySelector('#hist-body');
+            let current     = his.slice();
+
+            // Filtrar
             const update = list => {
-              tbody.innerHTML = list.map(h=>
-                `<tr class="border-b">
-                  <td class="py-1 px-2">${h.dni}</td>
-                  <td class="py-1 px-2">${h.nombre}</td>
-                  <td class="py-1 px-2">${h.tipo}</td>
-                  <td class="py-1 px-2">${h.fecha}</td>
-                  <td class="py-1 px-2">${h.hora}</td>
-                  <td class="py-1 px-2">${h.comedor}</td>
-                  <td class="py-1 px-2"><button data-idx="${h.idx}" class="del-btn bg-red-500 text-white px-2 py-1 rounded transition transform hover:scale-105 cursor-pointer">Eliminar</button></td>
-                </tr>`
-              ).join('');
+              tbodyHist.innerHTML = buildRows(list);
               attachDelete();
             };
-            input.addEventListener('input', debounce(e=>{
-              const val=e.target.value.trim().toLowerCase();
-              update(current.filter(h=>h.fecha.includes(val)||h.hora.includes(val)||h.tipo.toLowerCase().includes(val)));
-            },300));
-            const attachDelete = ()=>{
-              container.querySelectorAll('.del-btn').forEach(btn=>btn.addEventListener('click',()=>{
-                Swal.fire({
-                  title:'Confirmar eliminación',
-                  html:'<input id="res-name" class="swal2-input" placeholder="Responsable (Nombre)"/><input id="res-dni" class="swal2-input" placeholder="Responsable (DNI)"/>',
-                  showCancelButton:true,
-                  preConfirm: ()=>{ const n=container.querySelector('#res-name').value; const d=container.querySelector('#res-dni').value; if(!n||!d) Swal.showValidationMessage('Requerido'); return {n,d}}                
-                }).then(r2=>{ if(r2.isConfirmed){ history.splice(btn.dataset.idx,1); saveJSON('deliveriesHistory',history); showHist(b)(); }});
-              }));
-            };
-            update(current);
+            input.addEventListener('input', debounce(e => {
+              const term = e.target.value.toLowerCase();
+              update(current.filter(x =>
+                x.fecha.includes(term) ||
+                x.hora.includes(term) ||
+                x.tipo.toLowerCase().includes(term)
+              ));
+            }, 300));
+
+            // Eliminar
+            function attachDelete() {
+              container.querySelectorAll('.del-btn').forEach(btn => {
+                btn.onclick = () => {
+                  Swal.fire({
+                    title: 'Confirmar eliminación',
+                    html: `
+                      <input id="res-name" class="swal2-input" placeholder="Supervisor (Nombre)" />
+                      <input id="res-dni"  class="swal2-input" placeholder="Supervisor (DNI)" />
+                    `,
+                    showCancelButton: true,
+                    confirmButtonText: 'Eliminar',
+                    cancelButtonText: 'Cancelar',
+                    preConfirm: () => {
+                      const pop = Swal.getPopup();
+                      const n = pop.querySelector('#res-name').value;
+                      const d = pop.querySelector('#res-dni').value;
+                      if (!n || !d) {
+                        Swal.showValidationMessage('Nombre y DNI requeridos');
+                        return;
+                      }
+                      return { n, d };
+                    }
+                  }).then(res => {
+                    if (res.isConfirmed) {
+                      // Borrar del historial
+                      history.splice(btn.dataset.idx, 1);
+                      saveJSON('deliveriesHistory', history);
+                      // Refresh principal & modal
+                      render();
+                      historialHandler(b)();
+                    }
+                  });
+                };
+              });
+            }
+            attachDelete();
           }
         });
       };
     }
 
+    // Toggle sidebar (mobile)
     const sb = document.getElementById('sidebar');
-    document.getElementById('btnSidebarOpen').onclick = ()=> sb.classList.remove('-translate-x-full');
-    document.getElementById('btnSidebarClose').onclick= ()=> sb.classList.add('-translate-x-full');
+    document.getElementById('btnSidebarOpen').onclick  = () => sb.classList.remove('-translate-x-full');
+    document.getElementById('btnSidebarClose').onclick = () => sb.classList.add('-translate-x-full');
 
+    // Inicial
     render();
   </script>
 </body>
 </html>
-
 
 
