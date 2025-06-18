@@ -1,3 +1,20 @@
+
+document.addEventListener("DOMContentLoaded", function () {
+  const selectComedor = document.getElementById("comedor");
+  const comedores = JSON.parse(localStorage.getItem("comedores")) || [];
+
+  // Limpiar select y agregar la opción por defecto
+  selectComedor.innerHTML = '<option value="">Seleccione</option>';
+
+  comedores.forEach(comedor => {
+    const opcion = document.createElement("option");
+    opcion.value = comedor.nombre;
+    opcion.textContent = comedor.nombre;
+    selectComedor.appendChild(opcion);
+  });
+});
+
+
 document.getElementById("btnGuardar").addEventListener("click", () => {
       const beneficiario = {
         tipoDocumento: document.getElementById("tipoDocumento").value,

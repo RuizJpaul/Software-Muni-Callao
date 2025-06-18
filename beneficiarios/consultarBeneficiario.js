@@ -10,6 +10,28 @@ document.addEventListener("DOMContentLoaded", () => {
   const formEditar = document.getElementById("formEditar");
   const btnCancelar = document.getElementById("btnCancelar");
 
+  function cargarComedores() {
+  const comedores = JSON.parse(localStorage.getItem("comedores")) || [];
+  const filtroComedor = document.getElementById("filtroComedor");
+  const editComedor = document.getElementById("editComedor");
+
+  // Limpiar opciones anteriores y dejar solo "Todos los comedores"
+  filtroComedor.innerHTML = `<option value="">Todos los comedores</option>`;
+  editComedor.innerHTML = "";
+
+  comedores.forEach(c => {
+    const option = document.createElement("option");
+    option.value = c.nombre;
+    option.textContent = c.nombre;
+    filtroComedor.appendChild(option);
+
+    const optionEdit = document.createElement("option");
+    optionEdit.value = c.nombre;
+    optionEdit.textContent = c.nombre;
+    editComedor.appendChild(optionEdit);
+  });
+}
+
   let beneficiarioEditando = null;
 
   function renderTabla(datos) {
@@ -17,23 +39,23 @@ document.addEventListener("DOMContentLoaded", () => {
     datos.forEach(b => {
       const fila = document.createElement("tr");
       fila.innerHTML = `
-        <td class="p-2">${b.tipoDocumento}</td>
-        <td class="p-2">${b.numeroDocumento}</td>
-        <td class="p-2">${b.nombres}</td>
-        <td class="p-2">${b.apellidos}</td>
-        <td class="p-2">${b.fechaNacimiento}</td>
-        <td class="p-2">${b.edad}</td>
-        <td class="p-2">${b.sexo}</td>
-        <td class="p-2">${b.direccion}</td>
-        <td class="p-2">${b.telefono}</td>
-        <td class="p-2">${b.estadoCivil}</td>
-        <td class="p-2">${b.hijos}</td>
-        <td class="p-2">${b.condicion}</td>
-        <td class="p-2">${b.comedor}</td>
-        <td class="p-2">${b.estado}</td>
-        <td class="p-2">
-          <button class="px-4 py-2 bg-yellow-500 text-white rounded hover:bg-green-400" onclick="editarBeneficiario('${b.numeroDocumento}')">Editar</button>
-        </td>
+            <td class="p-2">${b.tipoDocumento}</td>
+  <td class="p-2">${b.numeroDocumento}</td>
+  <td class="p-2">${b.nombres}</td>
+  <td class="p-2">${b.apellidos}</td>
+  <td class="p-2 hidden md:table-cell">${b.fechaNacimiento}</td>
+  <td class="p-2 hidden md:table-cell">${b.edad}</td>
+  <td class="p-2 hidden md:table-cell">${b.sexo}</td>
+  <td class="p-2 hidden lg:table-cell">${b.direccion}</td>
+  <td class="p-2 hidden lg:table-cell">${b.telefono}</td>
+  <td class="p-2 hidden lg:table-cell">${b.estadoCivil}</td>
+  <td class="p-2 hidden lg:table-cell">${b.hijos}</td>
+  <td class="p-2 hidden lg:table-cell">${b.condicion}</td>
+  <td class="p-2 hidden md:table-cell">${b.comedor}</td>
+  <td class="p-2 hidden md:table-cell">${b.estado}</td>
+  <td class="p-2">
+    <button class="text-blue-600 hover:underline" onclick="editarBeneficiario('${b.numeroDocumento}')">Editar</button>
+  </td>
       `;
       tabla.appendChild(fila);
     });
@@ -112,5 +134,6 @@ document.addEventListener("DOMContentLoaded", () => {
   filtroComedor.addEventListener("change", filtrar);
   filtroEstado.addEventListener("change", filtrar);
 
+  cargarComedores();
   renderTabla(beneficiarios);
 });
