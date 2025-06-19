@@ -66,21 +66,21 @@ document.addEventListener('DOMContentLoaded', () => {
     const tarjetas = document.querySelectorAll('.recuadro-comedor');
 
     buscador.addEventListener('input', () => {
-    const filtro = buscador.value.toLowerCase();
+        const filtro = buscador.value.toLowerCase();
 
-    tarjetas.forEach(card => {
-        const nombreP = card.querySelector('p[id^="nombre-comedor"]');
-        const direccionP = card.querySelector('p[id^="direccion-comedor"]');
+        tarjetas.forEach(card => {
+            const nombreP = card.querySelector('p[id^="nombre-comedor"]');
+            const direccionP = card.querySelector('p[id^="direccion-comedor"]');
 
-        const textoNombre = nombreP ? nombreP.textContent.toLowerCase() : '';
-        const textoDireccion = direccionP ? direccionP.textContent.toLowerCase() : '';
+            const textoNombre = nombreP ? nombreP.textContent.toLowerCase() : '';
+            const textoDireccion = direccionP ? direccionP.textContent.toLowerCase() : '';
 
-        if (textoNombre.includes(filtro) || textoDireccion.includes(filtro)) {
-        card.style.display = 'block';
-        } else {
-        card.style.display = 'none';
-        }
-    });
+            if (textoNombre.includes(filtro) || textoDireccion.includes(filtro)) {
+                card.style.display = 'block';
+            } else {
+                card.style.display = 'none';
+            }
+        });
     });
 });
 
@@ -103,13 +103,13 @@ function renderizarUI(state) {
             <button onclick="eliminarComedor(${index})">Eliminar</button>
         </div>
       `
-      document.querySelector("#titulo-dos").textContent=`Comedor N${elmt.id} Municipalidad Provincial del callao`;
-      if(elmt.estado==true){
-        document.querySelector(`#recuadro-comedor${index}`).style = "background-color: #7dfa9e;";
-      }
-      else{
-        document.querySelector(`#recuadro-comedor${index}`).style = "background-color: #fa7d85;";
-      }
+        document.querySelector("#titulo-dos").textContent = `Comedor N${elmt.id} Municipalidad Provincial del callao`;
+        if (elmt.estado == true) {
+            document.querySelector(`#recuadro-comedor${index}`).style = "background-color: #7dfa9e;";
+        }
+        else {
+            document.querySelector(`#recuadro-comedor${index}`).style = "background-color: #fa7d85;";
+        }
     })
 }
 
@@ -123,10 +123,10 @@ function verModalDos(index, nombre) {
     document.querySelector("#inputCantidad2").value = comedor.capacidad;
     document.querySelector("#inputResponsable2").value = comedor.responsable;
     document.querySelector("#inputTelefono2").value = comedor.telefono;
-    if(comedor.estado == true){
+    if (comedor.estado == true) {
         activarSwitch();
     }
-    else{
+    else {
         desactivarSwitch();
     }
     estadoComedor = comedor;
@@ -140,47 +140,69 @@ const labelText = document.getElementById('labelText');
 
 // Evento cuando el usuario cambia el estado del switch
 toggleSwitch.addEventListener('change', () => {
-if (toggleSwitch.checked) {
-    console.log("El switch está ACTIVADO");
-    labelText.textContent = "Activo";
-    // Aquí puedes llamar cualquier función que necesites
-    activarSwitch();
-} else {
-    console.log("El switch está DESACTIVADO");
-    labelText.textContent = "Inactivo";
-    // Aquí puedes poner otro comportamiento
-    desactivarSwitch();
-}
+    if (toggleSwitch.checked) {
+        console.log("El switch está ACTIVADO");
+        labelText.textContent = "Activo";
+        // Aquí puedes llamar cualquier función que necesites
+        activarSwitch();
+    } else {
+        console.log("El switch está DESACTIVADO");
+        labelText.textContent = "Inactivo";
+        // Aquí puedes poner otro comportamiento
+        desactivarSwitch();
+    }
 });
 
 // Si quieres modificar el estado desde código:
 function activarSwitch() {
-toggleSwitch.checked = true;
-labelText.textContent = "Activo";
+    toggleSwitch.checked = true;
+    labelText.textContent = "Activo";
 }
 
 function desactivarSwitch() {
-toggleSwitch.checked = false;
-labelText.textContent = "Inactivo";
+    toggleSwitch.checked = false;
+    labelText.textContent = "Inactivo";
 }
 
-// const btnGuardar2 = document.querySelector("#boton-guardar2");
-// btnGuardar2.addEventListener("click", function(event){
-//     event.preventDefault();
-//     const nombre2 = document.querySelector("#inputNombre2");
-//     const direccion2 = document.querySelector("#inputDireccion2");
-//     const cantidad2 = document.querySelector("#inputCantidad2");
-//     const responsable2 = document.querySelector("#inputResponsable2");
-//     const telefono2 = document.querySelector("#inputTelefono2");
-//     if (nombre2.value !== "" && direccion2.value !== "" && cantidad2.value !== "" && responsable2.value !== "" && telefono2.value !== ""){
-//         const newComedor = new Comedor(estadoComedor.id,nombre2, direccion2,cantidad2,responsable2,telefono2,true);
-//         window.comedorStore.updateComedor(estadoComedor.id,newComedor);
-//         alert("Datos modificados");
-//     }
-//     else{
-//         alert("Ingrese datos correctos");
-//     }
-// });
+const btnGuardar2 = document.querySelector("#boton-guardar2");
+btnGuardar2.addEventListener("click", function (event) {
+    event.preventDefault();
+
+    const nombre2 = document.querySelector("#inputNombre2");
+    const direccion2 = document.querySelector("#inputDireccion2");
+    const cantidad2 = document.querySelector("#inputCantidad2");
+    const responsable2 = document.querySelector("#inputResponsable2");
+    const telefono2 = document.querySelector("#inputTelefono2");
+
+    if (
+        nombre2.value !== "" &&
+        direccion2.value !== "" &&
+        cantidad2.value !== "" &&
+        responsable2.value !== "" &&
+        telefono2.value !== ""
+    ) {
+        const newComedor = new Comedor(
+            estadoComedor.id,
+            nombre2.value.trim(),
+            direccion2.value.trim(),
+            cantidad2.value.trim(),
+            responsable2.value.trim(),
+            telefono2.value.trim(),
+            toggleSwitch.checked
+        );
+
+        const index = window.comedorStore.getState().findIndex(
+            (c) => c.id === estadoComedor.id
+        );
+
+        window.comedorStore.updateComedor(index, newComedor);
+        ocultarModalDos();
+        alert("Datos modificados correctamente");
+    } else {
+        alert("Ingrese datos completos");
+    }
+});
+
 
 function ocultarModalDos() {
     estado = !estado;
